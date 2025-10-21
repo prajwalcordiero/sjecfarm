@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "1",
+      "name": "Artisan Sourdough",
+      "description": "A crusty, tangy loaf, naturally leavened and baked to perfection. Perfect for sandwiches or toast.",
+      "imageUrl": "https://images.unsplash.com/photo-1639407503825-f8e665c49b00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhcnRpc2FuJTIwYnJlYWR8ZW58MHx8fHwxNzYwOTY4NDE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "artisan bread",
+      "category": "bread"
+    },
+    {
+      "id": "2",
+      "name": "Organic Carrots",
+      "description": "A bunch of sweet and crunchy carrots, fresh from the farm. Rich in vitamins and great for snacking.",
+      "imageUrl": "https://images.unsplash.com/photo-1603462903957-566630607cc7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmcmVzaCUyMGNhcnJvdHN8ZW58MHx8fHwxNzYxMDQwMTM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fresh carrots",
+      "category": "vegetables"
+    },
+    {
+      "id": "3",
+      "name": "Free-Range Eggs",
+      "description": "A dozen large brown eggs from pasture-raised hens. Rich yolks and outstanding flavor.",
+      "imageUrl": "https://images.unsplash.com/photo-1596635069381-e8410efe2b02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxlZ2dzJTIwY2FydG9ufGVufDB8fHx8MTc2MDk5MTQ1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "eggs carton",
+      "category": "eggs"
+    },
+    {
+      "id": "4",
+      "name": "Whole Wheat Loaf",
+      "description": "A soft and hearty whole wheat bread, packed with fiber and nutrients. Ideal for healthy sandwiches.",
+      "imageUrl": "https://images.unsplash.com/photo-1611107415406-1c12f8cda424?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3aG9sZSUyMHdoZWF0JTIwYnJlYWR8ZW58MHx8fHwxNzYxMDQwMTM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "whole wheat bread",
+      "category": "bread"
+    },
+    {
+      "id": "5",
+      "name": "Ripe Roma Tomatoes",
+      "description": "Vibrant and juicy Roma tomatoes, perfect for sauces, salads, or roasting.",
+      "imageUrl": "https://images.unsplash.com/photo-1744835896651-93493e7d2ffc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxyb21hJTIwdG9tYXRvZXN8ZW58MHx8fHwxNzYxMDQwMTM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "roma tomatoes",
+      "category": "vegetables"
+    },
+    {
+      "id": "6",
+      "name": "Crisp Lettuce Head",
+      "description": "A fresh head of romaine lettuce with a crisp texture and refreshing taste.",
+      "imageUrl": "https://images.unsplash.com/photo-1691906470255-640353380f3d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyb21haW5lJTIwbGV0dHVjZXxlbnwwfHx8fDE3NjEwNDAxMzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "romaine lettuce",
+      "category": "vegetables"
+    }
+  ]
 }
