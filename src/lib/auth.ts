@@ -12,12 +12,18 @@ const ADMIN_CREDENTIALS = {
 
 const COOKIE_NAME = 'farm_fresh_session'
 
-type SessionPayload = {
-  userId: string;
-  expires: Date;
+// Custom claims stored in the JWT: must be JSON-serializable (no Dates)
+type JwtPayload = {
+  userId: string
 }
 
-export async function encrypt(payload: SessionPayload) {
+// Runtime session shape returned by getSession
+export type SessionPayload = {
+  userId: string
+  expires: Date
+}
+
+export async function encrypt(payload: JwtPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -27,10 +33,18 @@ export async function encrypt(payload: SessionPayload) {
 
 export async function decrypt(input: string): Promise<SessionPayload | null> {
   try {
-    const { payload } = await jwtVerify<SessionPayload>(input, key, {
+    const { payload } = await jwtVerify(input, key, {
       algorithms: ['HS256'],
     })
-    return payload
+
+    // payload contains custom claims; standard claims (like `exp`) are present at runtime
+    const anyPayload = payload as unknown as Record<string, unknown>
+    const userId = anyPayload.userId as string | undefined
+    const exp = anyPayload.exp as number | undefined
+
+    if (!userId || !exp) return null
+
+    return { userId, expires: new Date(exp * 1000) }
   } catch (error) {
     return null
   }
@@ -38,18 +52,18 @@ export async function decrypt(input: string): Promise<SessionPayload | null> {
 
 export async function createSession(userId: string) {
   const expires = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
-  const session = await encrypt({ userId, expires })
+  const token = await encrypt({ userId })
 
-  cookies().set(COOKIE_NAME, session, {
-    expires,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-  })
+    ; (await cookies()).set(COOKIE_NAME, token, {
+      expires,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+    })
 }
 
 export async function getSession() {
-  const cookie = cookies().get(COOKIE_NAME)?.value
+  const cookie = (await cookies()).get(COOKIE_NAME)?.value
   if (!cookie) return null
 
   const session = await decrypt(cookie)
@@ -59,9 +73,9 @@ export async function getSession() {
 }
 
 export async function deleteSession() {
-  cookies().delete(COOKIE_NAME)
+  ; (await cookies()).delete(COOKIE_NAME)
 }
 
-export function verifyCredentials(username: string, password: string):boolean {
-    return username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password
+export function verifyCredentials(username: string, password: string): boolean {
+  return username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password
 }

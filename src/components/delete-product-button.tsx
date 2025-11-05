@@ -17,44 +17,48 @@ import {
 } from "@/components/ui/alert-dialog"
 
 function DeleteButton() {
-    const { pending } = useFormStatus();
-    return (
-        <Button
-            variant="destructive"
-            type="submit"
-            aria-disabled={pending}
-            disabled={pending}
-        >
-            {pending ? 'Deleting...' : 'Delete'}
-        </Button>
-    )
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      variant="destructive"
+      type="submit"
+      aria-disabled={pending}
+      disabled={pending}
+    >
+      {pending ? 'Deleting...' : 'Delete'}
+    </Button>
+  )
 }
 
 
 export function DeleteProductButton({ productId }: { productId: string }) {
-  const deleteProductWithId = deleteProduct.bind(null, productId);
+  const deleteProductWithId = async (formData: FormData) => {
+    const result = await deleteProduct(productId);
+    // You can handle the result here if needed
+    // For example, show a toast notification
+  };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="ghost" size="icon">
-            <Trash2 className="h-4 w-4 text-destructive" />
-            <span className="sr-only">Delete Product</span>
+          <Trash2 className="h-4 w-4 text-destructive" />
+          <span className="sr-only">Delete Product</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <form action={deleteProductWithId}>
-            <AlertDialogHeader>
+          <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete the product
-                from the servers.
+              This action cannot be undone. This will permanently delete the product
+              from the servers.
             </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <DeleteButton />
-            </AlertDialogFooter>
+          </AlertDialogFooter>
         </form>
       </AlertDialogContent>
     </AlertDialog>

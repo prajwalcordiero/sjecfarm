@@ -16,7 +16,7 @@ import {
 import { useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-const initialState = { message: null, errors: {} };
+const initialState = { message: '', errors: {} };
 
 export function UploadForm() {
   const [state, dispatch] = useFormState(addProduct, initialState);
@@ -31,7 +31,7 @@ export function UploadForm() {
       });
       formRef.current?.reset();
     } else if (state.message && state.errors && Object.keys(state.errors).length > 0) {
-       toast({
+      toast({
         variant: "destructive",
         title: 'Error',
         description: state.message,
@@ -50,10 +50,10 @@ export function UploadForm() {
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
         <Textarea id="description" name="description" placeholder="A brief description of the product." />
-         {state.errors?.description && <p className="text-sm text-destructive">{state.errors.description[0]}</p>}
+        {state.errors?.description && <p className="text-sm text-destructive">{state.errors.description[0]}</p>}
       </div>
-      
-       <div className="space-y-2">
+
+      <div className="space-y-2">
         <Label htmlFor="category">Category</Label>
         <Select name="category" defaultValue="vegetables">
           <SelectTrigger id="category">
@@ -67,6 +67,12 @@ export function UploadForm() {
         </Select>
         {state.errors?.category && <p className="text-sm text-destructive">{state.errors.category[0]}</p>}
       </div>
+      <div className="space-y-2">
+        <Label htmlFor="price">Price</Label>
+        <Input id="price" name="price" type="number" step="0.01" placeholder="₹ 50" />
+        {state.errors?.price && <p className="text-sm text-destructive">{state.errors.price[0]}</p>}
+      </div>
+
 
       <SubmitButton />
     </form>

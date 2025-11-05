@@ -1,5 +1,5 @@
 import type { Product } from '@/lib/definitions';
-import { ProductCard } from './product-card';
+import ProductCard from './product-card';
 
 type ProductGridProps = {
   products: Product[];
@@ -13,7 +13,7 @@ export function ProductGrid({ products }: ProductGridProps) {
       </div>
     );
   }
-  
+
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (

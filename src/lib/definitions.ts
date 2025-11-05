@@ -5,4 +5,5 @@ export type Product = {
   imageUrl: string;
   imageHint: string;
   category: 'bread' | 'vegetables' | 'eggs';
+  price: number;
 };

@@ -38,6 +38,7 @@ const ProductSchema = z.object({
   name: z.string().min(3, { message: 'Name must be at least 3 characters long.' }),
   description: z.string().min(10, { message: 'Description must be at least 10 characters long.' }),
   category: z.enum(['bread', 'vegetables', 'eggs']),
+  price: z.coerce.number().positive({ message: 'Price must be greater than 0.' }),
 });
 
 export async function addProduct(prevState: any, formData: FormData) {
@@ -45,6 +46,8 @@ export async function addProduct(prevState: any, formData: FormData) {
     name: formData.get('name'),
     description: formData.get('description'),
     category: formData.get('category'),
+    price: formData.get('price'),
+
   });
 
   if (!validatedFields.success) {
@@ -54,13 +57,14 @@ export async function addProduct(prevState: any, formData: FormData) {
     };
   }
 
-  const { name, description, category } = validatedFields.data;
+  const { name, description, category, price } = validatedFields.data;
 
   try {
     await addProductToDb({
       name,
       description,
       category,
+      price,
       // In a real app, you would handle file uploads and get a URL from a storage service.
       // Here, we use picsum.photos for demonstration.
       imageUrl: `https://picsum.photos/seed/${name.replace(/\s+/g, '-')}/600/400`,

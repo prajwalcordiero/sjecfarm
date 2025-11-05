@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import type { Product } from '@/lib/definitions';
 import {
@@ -7,6 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { DeleteProductButton } from './delete-product-button';
@@ -28,6 +31,7 @@ export function AdminProductList({ products }: { products: Product[] }) {
             <TableHead className="w-[80px]">Image</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Category</TableHead>
+            <TableHead>Price</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -47,6 +51,7 @@ export function AdminProductList({ products }: { products: Product[] }) {
               <TableCell>
                 <Badge variant="outline" className="capitalize">{product.category}</Badge>
               </TableCell>
+              <TableCell>₹{product.price}</TableCell>
               <TableCell className="text-right">
                 <DeleteProductButton productId={product.id} />
               </TableCell>
