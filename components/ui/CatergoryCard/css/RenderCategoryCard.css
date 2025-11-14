@@ -13,7 +13,7 @@
 
     /* "Frost" & "Refraction" */
     backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
 
     /* "Light" */
     /* background: linear-gradient( */
