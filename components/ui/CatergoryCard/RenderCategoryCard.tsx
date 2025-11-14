@@ -1,17 +1,40 @@
-import "./css/RenderCategoryCard.css"
+import "./css/RenderCategoryCard.css";
+import { ReactNode } from "react";
+
+interface RenderCategoryCardProps {
+    imageSrc: string;
+    px?: string | number;
+    py?: string | number;
+    w?: string | number;
+    h?: string | number;
+    bgRect?: ReactNode;
+    titlePath?: ReactNode;
+    bottomCard?: ReactNode;
+}
+
 export default function RenderCategoryCard({
     imageSrc,
-    px, py, w, h,
+    px,
+    py,
+    w,
+    h,
     bgRect,
     titlePath,
-    bottomCard
-}) {
+    bottomCard,
+}: RenderCategoryCardProps) {
     return (
         <div className="flex">
             <div className="flex relative justify-center mb-20">
                 <div className="glass-div"></div>
 
-                <svg className="z-2" width="313" height="438" viewBox="0 0 313 438" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                    className="z-2"
+                    width="313"
+                    height="438"
+                    viewBox="0 0 313 438"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
                     {bgRect}
 
                     <image
