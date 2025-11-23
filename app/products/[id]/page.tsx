@@ -35,7 +35,7 @@ export default async function ProductDetailsPage({ params }: ProductPageProps) {
 
 	return (
 		<main className="mx-auto max-w-3xl p-6">
-			<div className="rounded-2xl border border-white/10 p-4">
+			<div className="bg-amber-300 rounded-2xl border border-white/10 p-4">
 				{product.imageUrl ? (
 					<img
 						alt={product.name}
@@ -61,7 +61,7 @@ export default async function ProductDetailsPage({ params }: ProductPageProps) {
 				)}
 
 				<div className="text-lg font-semibold">₹{Number(product.price).toFixed(2)}</div>
-				<div className="text-xs opacity-70">Stock: {product.stock}</div>
+				<div className="text-red text-xs opacity-70">Stock: {product.stock}</div>
 			</div>
 		</main>
 	);
