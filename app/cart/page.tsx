@@ -4,6 +4,7 @@ import { useCart } from "@/components/CartContext";
 
 export default function CartPage() {
   const { cart } = useCart();
+  console.log(cart)
 
   return (
     <div className="p-6 bg-white min-h-screen">
@@ -14,7 +15,6 @@ export default function CartPage() {
       ) : (
         cart.map((item) => (
           <div
-            key={item.id}
             className="border p-4 mb-4 rounded-xl flex items-center gap-4"
           >
             <img src={item.imageUrl} className="w-20 h-20" />
