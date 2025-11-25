@@ -24,10 +24,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCart((prev) => {
       const exist = prev.find((p) => p.id === item.id);
       if (exist) {
-        return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p
-        );
-      }
+        console.log(exist, "am exist")
+        return prev.map((p) => { console.log(p.id, item.id)
+          return p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p }
+      );
+    }
+    console.log(...prev, "i don't")
       return [...prev, { ...item, quantity: 1 }];
     });
   };

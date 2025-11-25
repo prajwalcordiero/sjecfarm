@@ -121,7 +121,7 @@ export default function ProductCard(props: any) {
 
                                 <p className="font-semibold text-black">{item.name}</p>
                                 <p className="text-gray-600 text-sm mt-1">₹{item.price}</p>
-                                <button onClick={() => addToCart([{id: item.id, name: item.name, price: item.price, imageUrl: item.imageUrl, quantity: item.quantity}])} className="text-black px-4 py-2 bg-white  border-2 rounded-3xl mr-4">Add to cart</button>
+                                <button onClick={() => addToCart({id: item.id, name: item.name, price: item.price, imageUrl: item.imageUrl, quantity: item.quantity})} className="text-black px-4 py-2 bg-white  border-2 rounded-3xl mr-4">Add to cart</button>
                                 <button className="text-black px-4 py-2 bg-white   border-2 rounded-3xl">Buy now</button>
                             </div>
                         ))}
