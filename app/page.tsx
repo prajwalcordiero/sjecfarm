@@ -3,6 +3,7 @@ import {SignInButton,SignUpButton} from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Link from 'next/link'
 
 
 export default function Home() {
@@ -40,7 +41,7 @@ export default function Home() {
           <button className="bg-gray-200 font-bold text-black rounded-4xl border-3 w-40 h-10 border-blue-800 p-24 pt-2 pb-2 mt-10 ">Sign Up</button>
         </SignUpButton>
         </div>
-       
+       <Link href="/admin/create-product">Admin Login</Link>
       
     </main>
  

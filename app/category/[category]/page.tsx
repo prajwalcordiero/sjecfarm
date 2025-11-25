@@ -1,0 +1,295 @@
+import Navbar from "@/components/navbar";
+import Link from "next/link";
+
+
+
+
+export default async function CategoryPage({ params }: { params: { category: string } }) {
+  const { category } = await params;
+  
+
+  const products: Record<string, any[]> = {
+    bakery: [
+      {
+        id: "1",
+        name: "Pizza",
+        description: "Fresh apple",
+        price: 50,
+        stock: 20,
+        category: "bakery",
+        imageUrl: "/pizza.avif",
+        publicId: "apple_1",
+        createdAt: null,
+      },
+      {
+        id: "2",
+        name: "Cookies",
+        description: "Ripe banana",
+        price: 30,
+        stock: 25,
+        category: "bakery",
+        imageUrl: "/cookie.jpg",
+        publicId: "banana_1",
+        createdAt: null,
+      },
+      {
+        id: "3",
+        name: "Puffs",
+        description: "Fresh apple",
+        price: 50,
+        stock: 20,
+        category: "bakery",
+        imageUrl: "/puff.jpg",
+        publicId: "apple_1",
+        createdAt: null,
+      },
+      {
+        id: "4",
+        name: "Choco Lava Cake",
+        description: "Fresh apple",
+        price: 50,
+        stock: 20,
+        category: "bakery",
+        imageUrl: "/choco.jpg",
+        publicId: "apple_1",
+        createdAt: null,
+      },
+    ],
+
+    vegetable: [
+      {
+        id: "1",
+        name: "Carrot",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/carrot.webp",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+      {
+        id: "2",
+        name: "Ladies Finger",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/Ladies.jpg",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+      {
+        id: "3",
+        name: "Brinjal",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/brinjal.webp",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+      {
+        id: "4",
+        name: "Tomato",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/tomato.jpg",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+      
+    ],
+fruits: [
+      {
+        id: "1",
+        name: "Apple",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/apple.jpg",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+      {
+        id: "2",
+        name: "Pineapple",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/pineapple.jpg",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+      {
+        id: "3",
+        name: "Banana",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/banana.jpeg",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+      {
+        id: "4",
+        name: "Dragon Fruit",
+        description: "Organic carrot",
+        price: 40,
+        stock: 10,
+        category: "vegetables",
+        imageUrl: "/dragon.webp",
+        publicId: "carrot_1",
+        createdAt: null,
+      },
+    ],
+    eggs: [
+      {
+        id: "1",
+        name: "Eggs",
+        description: "Farm eggs",
+        price: 60,
+        stock: 12,
+        category: "eggs",
+        imageUrl: "/eggs.jpg",
+        publicId: "eggs_1",
+        createdAt: null,
+      },
+    ],
+  };
+
+  const list = products[category] || [];
+
+  return (
+    <>
+    <Navbar/>
+   
+    <div className="bg-white min-h-screen ">
+       
+
+  <div className="w-full flex justify-center pt-10 ">
+   
+
+    <input
+      type="text"
+      placeholder="  Search for pizza..."
+      className="
+        w-full
+        max-w-[550px]
+        bg-white
+        text-black
+        h-10 px-6 mt-4
+        rounded-full
+        outline-none
+        border border-black
+      "
+    />
+  </div>
+  <div className="">
+ 
+</div>
+   
+
+        {category === "vegetable" && (
+  <div className=" p-4 rounded-lg mb-6 ">
+    <h2 className="text-4xl font-bold text-black w-full mt-4">
+      Fresh fruits and Vegetables
+    </h2>
+
+    <div className="flex gap-4 mt-3">
+      <a
+        href="/category/vegetable"
+        className="px-4 py-2 bg-white text-black  border-2 rounded-3xl"
+      >
+        Vegetables
+      </a>
+
+      <a
+        href="/category/fruits"
+        className="px-4 py-2 bg-white text-black  border-2 rounded-3xl"
+      >
+        Fruits
+      </a>
+    </div>
+  </div>
+)}
+        {category === "fruits" && (
+  <div className=" p-4 rounded-lg mb-6 mt-4">
+    <h2 className="text-4xl font-bold text-black  w-full mt-4">
+      Fresh fruits and Vegetables
+    </h2>
+
+    <div className="flex gap-4 mt-3">
+      <a
+        href="/category/vegetable"
+        className="px-4 py-2 bg-black text-white  border-2 rounded-3xl"
+      >
+        Vegetables
+      </a>
+
+      <a
+        href="/category/fruits"
+        className="px-4 py-2 bg-black text-white border-2 rounded-3xl"
+      >
+        Fruits
+      </a>
+    </div>
+  </div>
+)}
+{category === "bakery" && (
+  <div className="bg-white p-4 rounded-lg mb-6 ">
+    <h2 className="text-4xl font-bold text-black  w-full mt-4">
+      Fresh Bakery Products
+    </h2>
+
+   
+
+  </div>
+)}
+{category === "eggs" && (
+  <div className="bg-white p-4 rounded-2xl mb-6 ">
+    <h2 className="text-4xl font-bold text-black w-full mt-4">
+      Fresh Eggs
+    </h2>
+
+   
+
+  </div>
+)}
+
+
+      {list.length === 0 ? (
+        <p>No products found</p>
+      ) : (
+        <div className="grid grid-cols-5  gap-4">
+          {list.map((item) => (
+            <div
+              key={item.id}
+              className="p-2 border-2 border-black rounded-4xl shadow ml-8 bg-white text-center"
+            >
+              <img
+                src={item.imageUrl}
+                alt={item.name}
+                className="w-full h-60  object-contain mb-2"
+              />
+
+              <p className="font-semibold text-black">{item.name}</p>
+              <p className="text-gray-600 text-sm mt-1">₹{item.price}</p>
+              <Link href="/cart" className="text-black px-4 py-2 bg-white  border-2 rounded-3xl mr-4">Add to cart</Link>
+              <button className="text-black px-4 py-2 bg-white   border-2 rounded-3xl">Buy now</button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+    </>
+ 
+  
+  );
+}
