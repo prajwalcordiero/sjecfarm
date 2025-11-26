@@ -1,17 +1,8 @@
-// "use client"
-import { useCart } from "@/components/CartContext";
-import Navbar from "@/components/navbar";
+import { CartProvider } from "@/components/CartContext";
 import ProductCard from "@/components/ProductCard";
-import Link from "next/link";
-
-
-
-
 
 export default async function CategoryPage({ params }: { params: { category: string } }) {
     const { category } = await params;
-    // const { addToCart } = useCart();
-
 
     const products: Record<string, any[]> = {
         bakery: [
@@ -172,8 +163,8 @@ export default async function CategoryPage({ params }: { params: { category: str
     const list = products[category] || [];
 
     return (
-        
-        <ProductCard category={category} list={list} />
-
+        <>
+            <ProductCard category={category} list={list} />
+        </>
     );
 }

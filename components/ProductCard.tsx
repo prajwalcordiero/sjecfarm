@@ -1,39 +1,13 @@
 "use client"
-import React from 'react'
-import Navbar from './navbar'
 import { useCart } from './CartContext'
+import SearchBar from './ui/SearchBar'
 
 export default function ProductCard(props: any) {
     const {addToCart} = useCart()
   return (
     <>
-            <Navbar />
-
             <div className="bg-white min-h-screen ">
-
-
-                <div className="w-full flex justify-center pt-10 ">
-
-
-                    <input
-                        type="text"
-                        placeholder="  Search for pizza..."
-                        className="
-        w-full
-        max-w-[550px]
-        bg-white
-        text-black
-        h-10 px-6 mt-4
-        rounded-full
-        outline-none
-        border border-black
-      "
-                    />
-                </div>
-                <div className="">
-
-                </div>
-
+               <SearchBar/> 
 
                 {props.category === "vegetable" && (
                     <div className=" p-4 rounded-lg mb-6 ">
