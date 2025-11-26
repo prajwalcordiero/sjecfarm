@@ -1,4 +1,4 @@
-// "use client"
+"use-client"
 import { useCart } from "@/components/CartContext";
 import Navbar from "@/components/navbar";
 import ProductCard from "@/components/ProductCard";
@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default async function CategoryPage({ params }: { params: { category: string } }) {
     const { category } = await params;
-    // const { addToCart } = useCart();
+     
 
 
     const products: Record<string, any[]> = {
