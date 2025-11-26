@@ -1,13 +1,39 @@
 "use client"
-import { useCart } from './CartContext'
 import SearchBar from './ui/SearchBar'
+import React, { useState } from "react";
+import { useCart } from "./CartContext";
+import { useRouter } from "next/navigation";
 
 export default function ProductCard(props: any) {
-    const {addToCart} = useCart()
-  return (
-    <>
+    const { addToCart } = useCart();
+    const router = useRouter();
+
+    const [message, setMessage] = useState(""); 
+
+    const handleBuyNow = (item: any) => {
+        router.push(
+            `/checkout?id=${item.id}&name=${item.name}&price=${item.price}&imageUrl=${item.imageUrl}`
+        );
+    };
+
+    const handleAddToCart = (item: any) => {
+        addToCart({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            imageUrl: item.imageUrl,
+            quantity: 1,
+        });
+
+        // Show message for 2 seconds
+        setMessage(`${item.name} added to cart!`);
+        setTimeout(() => setMessage(""), 2000);
+    };
+
+    return (
+        <>
             <div className="bg-white min-h-screen ">
-               <SearchBar/> 
+                <SearchBar />
 
                 {props.category === "vegetable" && (
                     <div className=" p-4 rounded-lg mb-6 ">
@@ -22,7 +48,6 @@ export default function ProductCard(props: any) {
                             >
                                 Vegetables
                             </a>
-
                             <a
                                 href="/category/fruits"
                                 className="px-4 py-2 bg-white text-black  border-2 rounded-3xl"
@@ -77,11 +102,10 @@ export default function ProductCard(props: any) {
 
                 )}
 
-
                 {props.list.length === 0 ? (
-                    <p>No products found</p>
+                    <p className="text-center text-black mt-6">No products found</p>
                 ) : (
-                    <div className="grid grid-cols-5  gap-4">
+                    <div className="grid grid-cols-5 gap-4 mt-6">
                         {props.list.map((item: any) => (
                             <div
                                 key={item.id}
@@ -90,18 +114,36 @@ export default function ProductCard(props: any) {
                                 <img
                                     src={item.imageUrl}
                                     alt={item.name}
-                                    className="w-full h-60  object-contain mb-2"
+                                    className="w-full h-60 object-contain mb-2"
                                 />
 
                                 <p className="font-semibold text-black">{item.name}</p>
                                 <p className="text-gray-600 text-sm mt-1">₹{item.price}</p>
-                                <button onClick={() => addToCart({id: item.id, name: item.name, price: item.price, imageUrl: item.imageUrl, quantity: item.quantity})} className="text-black px-4 py-2 bg-white  border-2 rounded-3xl mr-4">Add to cart</button>
-                                <button className="text-black px-4 py-2 bg-white   border-2 rounded-3xl">Buy now</button>
+
+                                <button
+                                    onClick={() => handleAddToCart(item)}
+                                    className="text-black px-4 py-2 bg-white border-2 rounded-3xl mr-4"
+                                >
+                                    Add to cart
+                                </button>
+
+                                <button
+                                    onClick={() => handleBuyNow(item)}
+                                    className="text-black px-4 py-2 bg-white border-2 rounded-3xl"
+                                >
+                                    Buy now
+                                </button>
                             </div>
                         ))}
                     </div>
                 )}
+
+                {message && (
+                    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-black text-white px-6 py-2 rounded-full shadow-lg">
+                        {message}
+                    </div>
+                )}
             </div>
         </>
-  )
+    );
 }
