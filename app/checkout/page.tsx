@@ -28,7 +28,6 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <Navbar />
       <div className="bg-white text-black l-8" style={{ padding: 20 }}>
         <h1 className="text-4xl m-4">Checkout</h1>
 
