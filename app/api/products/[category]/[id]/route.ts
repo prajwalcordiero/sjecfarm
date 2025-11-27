@@ -3,9 +3,26 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebase/firebase-admin";
 import { productSchema } from "@/lib/firebase/schema/product";
 
+export async function GET(
+    req: Request,
+    { params }: { params: { category: string, id: string } }
+) {
+    const { category, id } = await params;
+    
+    const doc = await adminDb
+        .collection("products")
+        .doc(category)
+        .collection(category)
+        .doc(id)
+        .get();
+    
+    if (!doc.exists) return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
+    return NextResponse.json({ ok: true, id, ...doc.data() });
+}
+
 export async function PATCH(
     req: Request,
-    context: { params: Promise<{ id: string }> }
+    { params }: { params: { category: string, id: string } }
 ) {
     const { userId } = await auth();
     if (!userId)
@@ -15,7 +32,7 @@ export async function PATCH(
     if (user?.privateMetadata?.role !== "admin")
         return NextResponse.json({ error: "Forbidden: admin only" }, { status: 403 });
 
-    const { id } = await context.params;
+    const { category, id } = await params;
     if (!id)
         return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
@@ -25,7 +42,7 @@ export async function PATCH(
         const partialSchema = productSchema.partial().omit({ createdAt: true });
         const parsed = partialSchema.parse(body);
 
-        const ref = adminDb.collection("products").doc(id);
+        const ref = adminDb.collection("products").doc(category).collection(category).doc(id);
         const snap = await ref.get();
 
         if (!snap.exists)
@@ -41,7 +58,7 @@ export async function PATCH(
 
 export async function DELETE(
     _req: Request,
-    ctx: { params: Promise<{ id: string }> }
+    { params }: { params: { category: string; id: string } }
 ) {
     const { userId } = await auth();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -51,11 +68,11 @@ export async function DELETE(
         return NextResponse.json({ error: "Forbidden: admin only" }, { status: 403 });
     }
 
-    const { id } = await ctx.params;
+    const { category, id } = await params;
     if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
     try {
-        const ref = adminDb.collection("products").doc(id);
+        const ref = adminDb.collection("products").doc(category).collection(category).doc(id);
         const snap = await ref.get();
         if (!snap.exists) {
             return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });

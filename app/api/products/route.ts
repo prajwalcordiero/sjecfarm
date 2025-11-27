@@ -3,6 +3,8 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { cloudinary } from "@/lib/cloudinary/cloudinary";
 import { FieldValue } from "firebase-admin/firestore";
+import { Product } from "@/lib/firebase/schema/product";
+import { orderBy } from "firebase/firestore";
 
 const CATEGORIES = new Set(["bakery", "vegetables", "eggs"]);
 const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp", "image/jpg", "image/heic", "image/avif"]);
@@ -14,23 +16,28 @@ function toBuffer(ab: ArrayBuffer) {
 
 export async function GET() {
     const { userId } = await auth();
-    if (userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const user = await currentUser();
     if (user?.privateMetadata?.role !== "admin")
         return NextResponse.json({ error: "Forbidden: admin only" }, { status: 403 });
 
     try {
-        const productSnap = await adminDb
-        .collection("products")
-        .orderBy("createdAt", "desc")
-        .get();
-        
-        const products = productSnap.docs.map(d =>(
-            { id: d.id , ...d.data() }
-        ));
-
-        return NextResponse.json({ ok: true, products });
+		const products: Product[] = [];
+		
+		for (const category of CATEGORIES) {
+			const snap = await adminDb
+				.collection("products")
+				.doc(category)
+				.collection(category)
+				.orderBy("createdAt", "desc")
+				.get();
+			
+			snap.docs.forEach(d => {
+				products.push({ id: d.id, category: category, ...d.data() })
+			})
+		}
+		return NextResponse.json({ ok: true, products });
     } catch (e: any) {
         return NextResponse.json({ ok: false, error: e?.message ?? "Failed to fetch products"}, { status: 500 } );
     }
@@ -64,7 +71,7 @@ export async function POST(req: NextRequest) {
 		if (!ALLOWED.has(mime)) return NextResponse.json({ ok: false, error: `Unsupported type: ${mime}` }, { status: 415 });
 		if (file.size > MAX_BYTES) return NextResponse.json({ ok: false, error: `File too large (max ${MAX_BYTES} bytes)` }, { status: 413 });
         
-        const baseFolder = process.env.CLOUDINARY_UPLOAD_FOLDER || "products";
+        const baseFolder = process.env.CLOUDINARY_UPLOAD_FOLDER || "sjecfarm";
 		const folder = `${baseFolder}/${category}`;
 		const buffer = toBuffer(await file.arrayBuffer());
 
@@ -79,16 +86,20 @@ export async function POST(req: NextRequest) {
 		const imageUrl = uploadRes.secure_url as string;
 		const publicId = uploadRes.public_id as string;
 
-        const ref = await adminDb.collection("products").add({
-            name,
-            description: description ?? null,
-			price,
-			stock,
-			category,
-			imageUrl,
-			publicId,
-			createdAt: FieldValue.serverTimestamp(),
-		});
+        const ref = await adminDb
+			.collection("products")
+			.doc(category)
+			.collection(category)
+			.add({
+				name,
+				description: description ?? null,
+				price,
+				stock,
+				category,
+				imageUrl,
+				publicId,
+				createdAt: FieldValue.serverTimestamp(),
+			});
 
 		return NextResponse.json({
 			ok: true,
