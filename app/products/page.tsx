@@ -13,14 +13,17 @@ function optimize(url: string) {
     return url;
 }
 
-export default async function ProductsPage() {
+export default async function ProductsPage() { 
     const { userId } = await auth();
     if (!userId) redirect("/sign-in?redirect=/products");
     const products = await getAllProducts();
     return (
-        <main className="mx-auto max-w-6xl p-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <main className="bg-amber-100">
+            <h1 className="flex justify-center items-center text-4xl font-bold text-black"> Fresh fruits & Vegetables</h1>
+            <div className="mx-auto max-w-6xl p-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ">
+                
             {products.map((p) => (
-                <div key={p.id} className="rounded-2xl border border-white/10 p-4">
+                <div key={p.id} className="rounded-4xl border border-black/10 p-4 bg-gray-300 text-black h-120 w-80">
                     {p.imageUrl ? (
                         <img
                             alt={p.name}
@@ -56,6 +59,7 @@ export default async function ProductsPage() {
                     </div>
                 </div>
             ))}
+            </div>
         </main>
     );
 }

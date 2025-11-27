@@ -18,10 +18,10 @@ export default function CreateProductTest() {
             <input name="name" placeholder="Name" className="border p-2 w-full" required />
             <input name="price" type="number" step="0.01" placeholder="Price" className="border p-2 w-full" required />
             <input name="stock" type="number" placeholder="Stock" className="border p-2 w-full" required />
-            <select name="category" className="border p-2 w-full" value={category} onChange={e => setCategory(e.target.value)}>
-                <option value="bakery">Bakery</option>
-                <option value="vegetables">Vegetables</option>
-                <option value="eggs">Eggs</option>
+            <select name="category" className="border p-2 w-full " value={category} onChange={e => setCategory(e.target.value)}>
+                <option className="text-black" value="bakery">Bakery</option>
+                <option className="text-black"  value="vegetable">Vegetables</option>
+                <option className="text-black"  value="eggs">Eggs</option>
             </select>
             <input name="description" placeholder="Description" className="border p-2 w-full" />
             <input name="file" type="file" accept="image/*" className="border p-2 w-full" required />
