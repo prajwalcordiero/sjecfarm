@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebase/firebase-admin";
 import { productSchema } from "@/lib/firebase/schema/product";
+import { cloudinary } from "@/lib/cloudinary/cloudinary";
 
 export async function GET(
     req: Request,
@@ -79,6 +80,8 @@ export async function DELETE(
         }
 
         await ref.delete();
+        await cloudinary.uploader.destroy(snap.data()?.publicId);
+
         return NextResponse.json({ ok: true, id });
     } catch (e: any) {
         return NextResponse.json({ ok: false, error: e?.message ?? "Delete failed" }, { status: 500 });
