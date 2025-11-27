@@ -60,3 +60,14 @@ body {
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 
 }
+
+@keyframes fade {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  20% { opacity: 1; transform: translate(-50%, 0); }
+  80% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, 10px); }
+}
+
+.animate-fade {
+  animation: fade 2s ease forwards;
+}
