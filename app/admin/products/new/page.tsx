@@ -43,7 +43,7 @@ export default function NewProduct() {
 					<option value="eggs">Eggs</option>
 				</select>
 
-				<textarea name="description" placeholder="Description" className="border p-2" />
+				
 
 				<input type="file" name="file" accept="image/*" required />
 

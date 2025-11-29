@@ -1,120 +1,96 @@
 "use client";
-import Navbar from "@/components/navbar";
-import { useSearchParams, useRouter } from "next/navigation"; // added useRouter
-import { useState, useEffect } from "react";
 
-export default function CheckoutPage() {
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useState } from "react";
+
+export default function BuyNowPage() {
   const params = useSearchParams();
-  const router = useRouter(); // initialize router
 
-  const productName = params.get("name") || "Product";
-  const productPrice = Number(params.get("price")) || 0;
-  const imageUrl = params.get("imageUrl") || "/placeholder.jpg";
+  // Get query params safely with fallbacks
+  const name = params.get("name") || "Product";
+  const price = Number(params.get("price")) || 0;
+  const imageUrl = params.get("imageUrl") || "/default-image.jpg";
 
-  const [qty, setQty] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState("cod");
-  const [total, setTotal] = useState(productPrice);
+  const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    setTotal(productPrice * qty);
-  }, [qty, productPrice]);
-
-  const confirmOrder = () => {
-    // redirect to success page instead of alert
-    router.push(
-      `/order-success?product=${productName}&qty=${qty}&total=${total}&payment=${paymentMethod}`
-    );
-  };
+  const totalAmount = price * quantity;
 
   return (
-    <>
-      <div className="bg-white text-black l-8" style={{ padding: 20 }}>
-        <h1 className="text-4xl m-4">Checkout</h1>
+    <div className="bg-gray-100 min-h-screen p-4 text-black">
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
 
-        <h2 className="text-2xl font-bold">{productName}</h2>
+        {/* LEFT SIDE */}
+        <div className="md:col-span-2 bg-white p-4 rounded-lg shadow-sm">
+          <h1 className="text-2xl font-bold mb-4">Buy Now</h1>
 
-        {/* Product Image */}
-        <img
-          src={imageUrl}
-          alt={productName}
-          className="w-40 h-40 object-contain mt-4"
-        />
-
-        <p className="mt-3 text-xl">Price: ₹{productPrice}</p>
-
-        {/* Quantity Controls */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginTop: 10,
-          }}
-        >
-          <button
-            className="text-xl rounded-lg border-2 p-2 "
-            onClick={() => setQty((q) => Math.max(1, q - 1))}
-          >
-            -
-          </button>
-          <span>{qty}</span>
-          <button
-            className="text-xl rounded-lg border-2 p-2 "
-            onClick={() => setQty((q) => q + 1)}
-          >
-            +
-          </button>
-        </div>
-
-        {/* Total Price */}
-        <h3 style={{ marginTop: 20 }} className="text-2xl">
-          Total: ₹{total}
-        </h3>
-
-        {/* Payment Method */}
-        <div className="text-xl mt-5">
-          <h4>Select Payment Method:</h4>
-
-          <label>
-            <input
-              type="radio"
-              name="payment"
-              value="cod"
-              checked={paymentMethod === "cod"}
-              onChange={() => setPaymentMethod("cod")}
+          <div className="flex gap-4">
+            <img
+              src={imageUrl}
+              alt={name}
+              className="w-32 h-32 object-cover rounded-md"
             />
-            Cash on Delivery
-          </label>
+
+            <div className="flex-1">
+              <p className="text-xl font-semibold">{name}</p>
+              <p className="text-gray-600">Seller: SJEC Farm</p>
+
+              <div className="text-xl font-bold mt-2">₹{price}</div>
+
+              {/* QUANTITY */}
+              <div className="mt-3 flex items-center gap-4">
+                <button
+                  className="px-2 border rounded"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                >
+                  -
+                </button>
+
+                <span className="text-lg">{quantity}</span>
+
+                <button
+                  className="px-2 border rounded"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="text-xl">
-          <label>
-            <input
-              type="radio"
-              name="payment"
-              value="online"
-              checked={paymentMethod === "online"}
-              onChange={() => setPaymentMethod("online")}
-            />
-            Online Payment
-          </label>
-        </div>
+        {/* RIGHT SIDE SUMMARY */}
+        <div className="bg-white shadow-sm rounded-lg p-4 h-fit">
+          <h2 className="text-xl font-semibold mb-4">Price Details</h2>
 
-        {/* Confirm Order */}
-        <button
-          onClick={confirmOrder}
-          style={{
-            marginTop: 30,
-            padding: "10px 20px",
-            background: "green",
-            color: "white",
-            borderRadius: 6,
-            cursor: "pointer",
-          }}
-        >
-          Confirm Order
-        </button>
+          <div className="flex justify-between mb-2">
+            <span>Price</span>
+            <span>₹{totalAmount}</span>
+          </div>
+
+          <div className="flex justify-between mb-2">
+            <span>Delivery</span>
+            <span className="text-green-600">FREE</span>
+          </div>
+
+          <hr className="my-3" />
+
+          <div className="flex justify-between font-bold text-lg">
+            <span>Total Amount</span>
+            <span>₹{totalAmount}</span>
+          </div>
+
+          <Link
+            href={`/payment?total=${totalAmount}&product=${encodeURIComponent(
+              name
+            )}&qty=${quantity}`}
+          >
+            <button className="bg-orange-500 hover:bg-orange-600 text-white w-full mt-4 py-2 rounded">
+              Proceed to Payment
+            </button>
+          </Link>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

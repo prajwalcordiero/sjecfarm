@@ -1,10 +1,14 @@
 "use client";
+
 import ProductCard from "@/components/ProductCard";
 import SearchBar from "@/components/ui/SearchBar";
+
 import { db } from "@/lib/firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
 
 export default function CategoryPage({ params }: { params: { category: string } }) {
   const { category } = useParams();

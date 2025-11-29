@@ -74,9 +74,11 @@ export default function CartPage() {
 
             {cart.length > 0 && (
               <div className="text-right mt-4">
+<Link href={`/payment?total=${totalPrice}`}>
                 <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded">
                   Place Order
                 </button>
+                </Link>
               </div>
             )}
           </div>

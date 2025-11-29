@@ -1,49 +1,62 @@
-'use client';
-import {SignInButton,SignUpButton} from "@clerk/nextjs";
+"use client";
+
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Link from 'next/link'
-
 
 export default function Home() {
   const { isSignedIn } = useUser();
   const router = useRouter();
 
   useEffect(() => {
-  if (isSignedIn) {
-    router.replace("/home");
-  }
+    if (isSignedIn) {
+      router.replace("/home");
+    }
   }, [isSignedIn, router]);
 
   if (isSignedIn === undefined || isSignedIn) {
     return null;
   }
+
   return (
-    <main className="flex flex-col items-center justify-center">
-      <h1 className="text-6xl">Welcome to SJEC Farm</h1>
-      <div>
-        <h1 className="mt-6 text-2xl">To continue with please login....</h1>
-      </div>
-      <img src="/sjec-logo.png" className="w-60 h-60 rounded-4xl mt-10"/>
-      
-      <div className="flex flex-col items-center">
-      
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-100 via-green-200 to-green-300 p-6">
+      {/* Logo */}
+      <img
+        src="/sjec-logo.png"
+        alt="SJEC Farm Logo"
+        className="w-48 h-48 md:w-60 md:h-60 rounded-full shadow-lg mb-6"
+      />
+
+      {/* Title */}
+      <h1 className="text-5xl md:text-6xl font-extrabold text-green-900 text-center">
+        Welcome to SJEC Farm
+      </h1>
+
+      {/* Subtitle */}
+      <p className="mt-4 text-lg md:text-2xl text-green-800 text-center">
+        To continue, please log in or sign up
+      </p>
+
+      {/* Buttons */}
+      <div className="flex flex-col md:flex-row gap-4 mt-8 items-center">
         <SignInButton mode="modal">
-          <button className="bg-gray-200 font-bold rounded-4xl p-24 pt-2 pb-2 mt-4 mr-4 text-black border-3 w-40 h-10 border-blue-800">
-            Log in
+          <button className="bg-green-700 hover:bg-green-800 text-white font-semibold rounded-full px-10 py-3 md:px-12 md:py-4 shadow-md transition-all duration-300">
+            Log In
           </button>
         </SignInButton>
-        
-       <h1 > Don't have an account? </h1>
 
         <SignUpButton mode="modal">
-          <button className="bg-gray-200 font-bold text-black rounded-4xl border-3 w-40 h-10 border-blue-800 p-24 pt-2 pb-2 mt-10 ">Sign Up</button>
+          <button className="bg-white hover:bg-green-100 text-green-800 font-semibold rounded-full px-10 py-3 md:px-12 md:py-4 shadow-md border-2 border-green-700 transition-all duration-300">
+            Sign Up
+          </button>
         </SignUpButton>
-        </div>
-       <Link href="/admin/create-product">Admin Login</Link>
-      
+      </div>
+
+      {/* Extra Text */}
+      <p className="mt-6 text-green-900 text-center">
+        Don't have an account? Create one to start shopping fresh from SJEC Farm!
+      </p>
     </main>
- 
   );
 }
