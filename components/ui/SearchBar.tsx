@@ -31,7 +31,7 @@ export default function SearchBar() {
 
 
 	const handleSelect = (id: string) => {
-		router.push(`/product/${id}`);
+		router.push(`/products/${id}`);
 		setText("");
 		setResults([]);
 	};
