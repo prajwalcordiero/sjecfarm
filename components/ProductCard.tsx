@@ -4,23 +4,30 @@ import { useCart } from "./CartContext";
 import { useRouter } from "next/navigation";
 import Toast from "./Toast";
 
-export default function ProductCard({ item }: any) {
-  const { addToCart } = useCart();
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+}
+
+export default function ProductCard({ item }: { item: Product }) {
+  const cart = useCart();
+  if (!cart) throw new Error("useCart must be used within CartProvider");
+  const { addToCart } = cart;
   const router = useRouter();
   const [message, setMessage] = useState("");
 
-  const handleBuyNow = (item: any) => {
+  const handleBuyNow = (item: Product) => {
     router.push(
-      `/checkout?id=${item.id}&name=${item.name}&price=${item.price}&imageUrl=${item.imageUrl}`
+      `/checkout?id=${item.id}&name=${item.name}&price=${item.price}`
     );
   };
 
-  const handleAddToCart = (item: any) => {
+  const handleAddToCart = (item: Product) => {
     addToCart({
       id: item.id,
       name: item.name,
       price: item.price,
-      imageUrl: item.imageUrl,
       quantity: 1,
     });
 
@@ -31,16 +38,7 @@ export default function ProductCard({ item }: any) {
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all p-4 border border-gray-100">
-        <img
-          src={item.imageUrl}
-          alt={item.name}
-          className="w-full h-40 object-cover rounded-lg"
-        />
-
-        <h3 className="mt-3 text-lg font-semibold text-gray-900">
-          {item.name}
-        </h3>
-
+        <h3 className="mt-3 text-lg font-semibold text-gray-900">{item.name}</h3>
         <p className="text-sm text-gray-500">₹{item.price}</p>
 
         <div className="mt-4 flex justify-between items-center">
@@ -60,7 +58,6 @@ export default function ProductCard({ item }: any) {
         </div>
       </div>
 
-      {/* Toast Popup */}
       <Toast message={message} />
     </>
   );
