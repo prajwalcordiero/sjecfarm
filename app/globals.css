@@ -16,7 +16,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -54,7 +54,6 @@ body {
     /* "Depth" */
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
 
-    /* --- Optional extras --- */
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 35px;
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);

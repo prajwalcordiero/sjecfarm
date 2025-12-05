@@ -1,7 +1,7 @@
 "use client";
 
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { ShoppingCart } from "lucide-react";
+import { Home, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import LocalFont from "next/font/local";
 
@@ -16,7 +16,7 @@ const Tomorrow = LocalFont({
 export default function Navbar() {
 
 	return (
-		<header className="sticky top-0 left-0 z-[100] w-full backdrop-blur-xl">
+		<header className="sticky top-0 left-0 z-100 w-full backdrop-blur-xl">
 			<div className={`flex h-20 items-center justify-between px-5 sm:px-8 transition-colors bg-white border-b border-slate-200/70`}>
 				<div className="flex items-center gap-3">
 					<img
@@ -38,14 +38,7 @@ export default function Navbar() {
 				</div>
 
 				<div className="flex items-center gap-4">
-					<Link href="/cart">
-						<div className="relative">
-							<ShoppingCart
-								size={22}
-								className="text-slate-700 hover:text-slate-900 transition"
-							/>
-						</div>
-					</Link>
+					
 
 					<SignedOut>
 						<Link href="/sign-in">
@@ -62,6 +55,22 @@ export default function Navbar() {
 					</SignedOut>
 
 					<SignedIn>
+						<Link href="/home">
+							<div className="relative">
+								<Home
+									size={22}
+									className="text-slate-700 hover:text-slate-900 transition"
+								/>
+							</div>
+						</Link>
+						<Link href="/cart">
+							<div className="relative">
+								<ShoppingCart
+									size={22}
+									className="text-slate-700 hover:text-slate-900 transition"
+								/>
+							</div>
+						</Link>
 						<UserButton afterSignOutUrl="/" />
 					</SignedIn>
 				</div>
