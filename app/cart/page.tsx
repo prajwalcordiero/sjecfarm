@@ -2,119 +2,130 @@
 
 import Link from "next/link";
 import { useCart } from "@/components/CartContext";
+import { motion } from "framer-motion";
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeItem } = useCart();
+	const { cart, updateQuantity, removeItem } = useCart();
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+	const totalPrice = cart.reduce(
+		(sum, item) => sum + item.price * item.quantity, 0
+	);
 
-  return (
-    <div className="bg-gray-100 min-h-screen p-4 text-black">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+	return (
+		<div className="min-h-screen bg-[#f5f7fa] py-10 px-4 text-slate-900">
+			<div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<motion.div
+					initial={{ opacity: 0, y: 12 }}
+					animate={{ opacity: 1, y: 0 }}
+					className="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(15,23,42,0.08)] border border-slate-200/60 p-6"
+				>
+					<h1 className="text-2xl font-semibold text-slate-900 mb-6">
+						My Cart <span className="text-slate-500">({cart.length})</span>
+					</h1>
 
-        {/* LEFT SIDE: ITEMS */}
-        <div className="md:col-span-2">
-          <div className="bg-white rounded-lg shadow-sm p-4">
-            <h1 className="text-2xl font-bold mb-4">My Cart ({cart.length})</h1>
+					{cart.length === 0 && (
+						<p className="text-slate-500 text-sm">Your cart is empty.</p>
+					)}
 
-            {cart.length === 0 && (
-              <p>Your cart is empty</p>
-            )}
+					{cart.map((item) => (
+						<div
+							key={item.id}
+							className="flex gap-4 py-6 border-b border-slate-200/50"
+						>
+							<div className="w-28 h-28 rounded-xl overflow-hidden border border-slate-200/60 shadow-sm">
+								<img
+									src={item.imageUrl}
+									alt={item.name}
+									className="w-full h-full object-cover"
+								/>
+							</div>
 
-            {cart.map((item) => (
-              <div key={item.id} className="border-b py-5 flex gap-4">
+							<div className="flex-1">
+								<p className="text-[16px] font-semibold">{item.name}</p>
+								<p className="text-[12px] text-slate-500">Seller: SJEC Mart</p>
 
-                {/* Image */}
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="w-28 h-28 object-cover rounded-md"
-                />
+								<p className="text-[18px] font-semibold text-emerald-700 mt-2">
+									₹{item.price}
+								</p>
 
-                {/* Item Details */}
-                <div className="flex-1">
-                  <p className="text-lg font-semibold">{item.name}</p>
-                  <p className="text-gray-600 text-sm">Seller: SJEC Farm</p>
+								<div className="mt-4 flex items-center gap-4">
+									<button
+										onClick={() => updateQuantity(item.id, item.quantity - 1)}
+										className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-[18px] hover:bg-slate-100 transition"
+									>
+										−
+									</button>
 
-                  {/* Pricing */}
-                  <div className="mt-2">
-                    <span className="text-xl font-bold text-black">₹{item.price}</span>
-                  </div>
+									<span className="text-lg font-medium">
+										{item.quantity}
+									</span>
 
-                  {/* Quantity controls */}
-                  <div className="mt-3 flex items-center gap-4">
-                    <button
-                      className="px-2 border rounded"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    >
-                      -
-                    </button>
+									<button
+										onClick={() => updateQuantity(item.id, item.quantity + 1)}
+										className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-[18px] hover:bg-slate-100 transition"
+									>
+										+
+									</button>
 
-                    <span className="text-lg">{item.quantity}</span>
+									<button
+										onClick={() => removeItem(item.id)}
+										className="text-red-500 text-sm font-medium hover:underline ml-2"
+									>
+										Remove
+									</button>
+								</div>
+							</div>
+						</div>
+					))}
 
-                    <button
-                      className="px-2 border rounded"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    >
-                      +
-                    </button>
+					{cart.length > 0 && (
+						<div className="text-right mt-6">
+							<Link href={"/checkout"} className="bg-emerald-600 hover:bg-emerald-700 transition text-white px-6 py-3 rounded-full font-medium shadow-md">
+								Place Order
+							</Link>
+						</div>
+					)}
+				</motion.div>
 
-                    {/* <button className="text-blue-600 text-sm ml-4">Save for Later</button> */}
 
-                    <button
-                      className="text-red-600 text-sm"
-                      onClick={() => removeItem(item.id)}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+				{cart.length > 0 && (
+					<motion.div
+						initial={{ opacity: 0, y: 12 }}
+						animate={{ opacity: 1, y: 0 }}
+						className="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-200/60 shadow-[0_20px_50px_rgba(15,23,42,0.08)] p-6 sticky top-6 h-fit"
+					>
+						<h2 className="text-xl font-semibold mb-4 text-slate-900">
+							Price Details
+						</h2>
 
-            {cart.length > 0 && (
-              <div className="text-right mt-4">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded">
-                  Place Order
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+						<div className="flex justify-between text-[15px] mb-2">
+							<span>Price ({cart.length} items)</span>
+							<span>₹{totalPrice}</span>
+						</div>
 
-        {/* RIGHT SIDE: PRICE SUMMARY */}
-        {cart.length > 0 && (
-          <div>
-            <div className="bg-white shadow-sm rounded-lg p-4 sticky top-4">
-              <h2 className="text-xl font-semibold mb-4">Price Details</h2>
+						<div className="flex justify-between text-[15px] mb-2">
+							<span>Discount</span>
+							<span className="text-emerald-600">− ₹0</span>
+						</div>
 
-              <div className="flex justify-between mb-2">
-                <span>Price ({cart.length} items)</span>
-                <span>₹{totalPrice}</span>
-              </div>
+						<div className="flex justify-between text-[15px] mb-2">
+							<span>Delivery Charges</span>
+							<span className="text-emerald-600">FREE</span>
+						</div>
 
-              <div className="flex justify-between mb-2">
-                <span>Discount</span>
-                <span className="text-green-600">− ₹0</span>
-              </div>
+						<hr className="my-3" />
 
-              <div className="flex justify-between mb-2">
-                <span>Delivery Charges</span>
-                <span className="text-green-600">FREE</span>
-              </div>
+						<div className="flex justify-between font-semibold text-lg text-slate-900">
+							<span>Total Amount</span>
+							<span>₹{totalPrice}</span>
+						</div>
 
-              <hr className="my-3" />
-
-              <div className="flex justify-between font-bold text-lg">
-                <span>Total Amount</span>
-                <span>₹{totalPrice}</span>
-              </div>
-
-              <p className="text-green-600 mt-2 text-sm">You will save ₹0 on this order</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+						<p className="text-emerald-600 mt-2 text-sm">
+							You will save ₹0 on this order
+						</p>
+					</motion.div>
+				)}
+			</div>
+		</div>
+	);
 }
