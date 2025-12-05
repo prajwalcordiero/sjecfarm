@@ -70,3 +70,15 @@ body {
 .animate-fade {
   animation: fade 2s ease forwards;
 }
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 999px;
+}
