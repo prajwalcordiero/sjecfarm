@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 interface Product {
 	id: string;
 	name: string;
+	image: string;   // <-- added
 }
 
 export default function SearchBar() {
@@ -23,12 +24,17 @@ export default function SearchBar() {
 		const fetchSuggestions = async () => {
 			const res = await fetch(`/api/search?q=${text}`);
 			const data = await res.json();
-			setResults(data);
+
+			// Only show results that actually match user input
+			const filtered = data.filter((item: Product) =>
+				item.name.toLowerCase().includes(text.toLowerCase())
+			);
+
+			setResults(filtered);
 		};
 
 		fetchSuggestions();
 	}, [text]);
-
 
 	const handleSelect = (id: string) => {
 		router.push(`/products/${id}`);
@@ -56,16 +62,27 @@ export default function SearchBar() {
 				/>
 
 				{results.length > 0 && (
-					<div className="absolute w-full bg-white rounded-xl shadow-lg border mt-2 z-50">
+					<div className="absolute w-full bg-white rounded-xl shadow-lg border mt-2 z-50 max-h-64 overflow-y-auto">
 						{results.map((item) => (
 							<div
 								key={item.id}
-								className="p-3 hover:bg-gray-100 cursor-pointer"
+								className="flex items-center gap-3 p-3 hover:bg-gray-100 cursor-pointer"
 								onClick={() => handleSelect(item.id)}
 							>
-								{item.name}
+								<img
+									src={item.image}
+									alt={item.name}
+									className="w-10 h-10 rounded-md object-cover"
+								/>
+								<span>{item.name}</span>
 							</div>
 						))}
+					</div>
+				)}
+
+				{results.length === 0 && text.trim() !== "" && (
+					<div className="absolute w-full bg-white rounded-xl shadow-lg border mt-2 z-50 p-3 text-gray-500">
+						No matching items found
 					</div>
 				)}
 			</div>
