@@ -5,92 +5,156 @@ import { db } from "@/lib/firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { SlidersHorizontal, ArrowDownWideNarrow } from "lucide-react";
 
-export default function CategoryPage({ params }: { params: { category: string } }) {
-  const { category } = useParams();
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+const FILTERS = ["Organic", "Fresh", "Local"];
+const SORT_OPTIONS = ["Price: Low to High", "Price: High to Low", "Newest"];
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      if (!category) return;
+export default function CategoryPage() {
+	const { category } = useParams();
+	const [products, setProducts] = useState<any[]>([]);
+	const [loading, setLoading] = useState(true);
 
-      const normalizedCategory = category === "vegetable" ? "vegetables" : category;
+	const titleMap: any = {
+		vegetables: "Fresh Vegetables",
+		vegetable: "Fresh Vegetables",
+		fruits: "Seasonal Fruits",
+		bakery: "Fresh Bakery Goods",
+		eggs: "Farm Fresh Eggs",
+	};
 
-      try {
-        const ref = collection(db, "products", normalizedCategory, normalizedCategory);
-        const querySnapshot = await getDocs(ref);
-        const list: any[] = [];
+	const heroImages: any = {
+		vegetable: "/vegetable_banner.png",
+		fruits: "/images/fruits-hero.jpg",
+		bakery: "/bakery_banner.png",
+		eggs: "/eggs_banner.png",
+	};
 
-        querySnapshot.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-        });
+	useEffect(() => {
+		const fetchProducts = async () => {
+			if (!category) return;
 
-        setProducts(list);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+			const normalizedCategory =
+				category === "vegetable" ? "vegetables" : category;
 
-    fetchProducts();
-  }, [category]);
+			try {
+				const ref = collection(
+					db,
+					"products",
+					normalizedCategory,
+					normalizedCategory
+				);
+				const querySnapshot = await getDocs(ref);
+				const list: any[] = [];
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="sticky top-0 bg-white z-10 shadow-sm px-6 py-4">
-        <SearchBar />
-      </div>
+				querySnapshot.forEach((doc) => {
+					list.push({ id: doc.id, ...doc.data() });
+				});
 
-      <div className="px-6 mt-6">
-        <h1 className="text-4xl font-bold text-gray-900 tracking-tight capitalize">
-          {category === "vegetables" && "Fresh Vegetables"}
-          {category === "fruits" && "Seasonal Fruits"}
-          {category === "bakery" && "Fresh Bakery Goods"}
-          {category === "eggs" && "Fresh Farm Eggs"}
-        </h1>
+				setProducts(list);
+			} catch (err) {
+				console.error("Error fetching products:", err);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-        {(category === "vegetables" || category === "fruits") && (
-          <div className="mt-4 flex gap-3">
-            <a
-              href="/category/vegetables"
-              className={`px-5 py-2 rounded-full border transition-all ${
-                category === "vegetables"
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-black border-gray-300"
-              }`}
-            >
-              Vegetables
-            </a>
+		fetchProducts();
+	}, [category]);
 
-            <a
-              href="/category/fruits"
-              className={`px-5 py-2 rounded-full border transition-all ${
-                category === "fruits"
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-black border-gray-300"
-              }`}
-            >
-              Fruits
-            </a>
-          </div>
-        )}
-      </div>
+	return (
+		<div className="min-h-screen bg-[#f6f7f9] pb-20">
+			{/* Sticky Search */}
+			<div className="sticky top-0 bg-white z-20 shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-6 py-4 backdrop-blur-xl">
+				<div className="max-w-xl mx-auto">
+					<SearchBar />
+				</div>
+			</div>
 
-      <div className="px-6 mt-10">
-        {loading ? (
-          <p className="text-center text-gray-500">Loading...</p>
-        ) : products.length === 0 ? (
-          <p className="text-center text-gray-500">No products found</p>
-        ) : (
-          <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-            {products.map((item) => (
-              <ProductCard key={item.id} item={item} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+			<div className="max-w-7xl mx-auto px-6 pt-10">
+
+				<motion.div
+					initial={{ opacity: 0, y: -20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.6 }}
+					className="text-center mb-12 py-16 rounded-3xl relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
+				>
+					<div
+						className="absolute inset-0 bg-cover bg-center"
+						style={{
+							backgroundImage: `url(${heroImages[category] || "/images/default-hero.jpg"})`,
+						}}
+					/>
+
+					<div className="absolute inset-0 bg-white/20 backdrop-blur-[6px]" />
+
+					<div className="relative z-10">
+						<h1 className="text-4xl sm:text-6xl font-bold text-slate-900 tracking-tight">
+							{titleMap[category] || "Products"}
+						</h1>
+						<p className="text-sm sm:text-base text-slate-600 mt-2">
+							Fresh. Local. Delivered smarter.
+						</p>
+					</div>
+				</motion.div>
+
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					className="mb-10 p-4 rounded-3xl border border-slate-200 bg-white/90 shadow-sm backdrop-blur-xl flex flex-col sm:flex-row justify-between items-center gap-4"
+				>
+					{/* FILTERS */}
+					<div className="flex items-center gap-2 text-emerald-700">
+						<SlidersHorizontal className="w-5 h-5" />
+						<span className="font-semibold text-slate-800">Filters:</span>
+
+						<div className="flex gap-2 ml-3">
+							{FILTERS.map((filter) => (
+								<button
+									key={filter}
+									className="text-xs px-3 py-1.5 rounded-full border border-slate-300 bg-white hover:bg-emerald-50 hover:border-emerald-300 transition"
+								>
+									{filter}
+								</button>
+							))}
+						</div>
+					</div>
+
+					{/* SORT */}
+					<div className="flex items-center gap-2 text-emerald-700">
+						<ArrowDownWideNarrow className="w-5 h-5" />
+						<span className="font-semibold text-slate-800">Sort By:</span>
+
+						<select className="bg-white/80 border border-slate-300 rounded-full px-3 py-1 text-sm text-slate-700 outline-none hover:bg-slate-50 transition">
+							{SORT_OPTIONS.map((option) => (
+								<option key={option}>{option}</option>
+							))}
+						</select>
+					</div>
+				</motion.div>
+
+				{loading ? (
+					<p className="text-center text-slate-500 mt-20">Loading...</p>
+				) : products.length === 0 ? (
+					<p className="text-center text-slate-500 text-lg mt-20">
+						No products found.
+					</p>
+				) : (
+					<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
+						{products.map((item, index) => (
+							<motion.div
+								key={item.id}
+								initial={{ opacity: 0, y: 25 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.45, delay: index * 0.04 }}
+							>
+								<ProductCard item={item} />
+							</motion.div>
+						))}
+					</div>
+				)}
+			</div>
+		</div>
+	);
 }
