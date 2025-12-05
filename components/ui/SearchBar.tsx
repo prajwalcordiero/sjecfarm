@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 interface Product {
 	id: string;
 	name: string;
-	image: string;   // <-- added
+	imageUrl: string;   // <-- added
 }
 
 export default function SearchBar() {
@@ -70,7 +70,7 @@ export default function SearchBar() {
 								onClick={() => handleSelect(item.id)}
 							>
 								<img
-									src={item.image}
+									src={item.imageUrl}
 									alt={item.name}
 									className="w-10 h-10 rounded-md object-cover"
 								/>
