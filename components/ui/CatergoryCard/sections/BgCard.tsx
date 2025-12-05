@@ -2,7 +2,7 @@
 export const VegetableBgCard = () => {
 	return (
 		<svg x="20" y="20" width="277" height="296" viewBox="0 0 277 296" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<rect width="277" height="296" rx="35" fill="#E5DFD1" />
+			<rect width="277" height="296" rx="35" fill="#F5FBF8" />
 		</svg>
 	)
 }
@@ -46,9 +46,9 @@ export const EggBgCard = () => {
 				<linearGradient id="paint0_linear_559_816" x1="138.121" y1="102.09" x2="191.74" y2="221.337" gradientUnits="userSpaceOnUse">
 					<stop stopColor="#E5DFD1" />
 					<stop offset="0.379808" stopColor="#BEB9AE" />
-					<stop offset="0.581731" stopColor="#AAA59B" />
-					<stop offset="0.793269" stopColor="#949087" />
-					<stop offset="1" stopColor="#7F7C74" />
+					{/* <stop offset="0.581731" stopColor="#AAA59B" /> */}
+					{/* <stop offset="0.793269" stopColor="#949087" /> */}
+					{/* <stop offset="1" stopColor="#7F7C74" /> */}
 				</linearGradient>
 			</defs>
 		</svg>
