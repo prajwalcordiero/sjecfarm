@@ -176,30 +176,8 @@ const Hero: React.FC = () => {
     }, []);
 
 	return (
-		<section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#f5f7f9] px-4 py-10 text-slate-900 sm:px-6 lg:px-12">
+		<section className="relative flex min-h-screen w-full items-center flex-col gap-10 justify-center overflow-hidden bg-[#f5f7f9] px-4 py-10 text-slate-900 sm:px-6 lg:px-12">
 			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.12),transparent_55%),radial-gradient(circle_at_bottom,rgba(15,23,42,0.16),transparent_60%)]" />
-
-			
-			<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-				<RealInfiniteScroller
-					data={duplicatedGalleryCards} 
-					speed={0.7}
-					render={(card, index) => (
-						<GalleryCard
-							key={card.id + index} 
-							index={index}
-							total={duplicatedGalleryCards.length} 
-							title={card.title}
-							subtitle={card.subtitle}
-							image={card.image}
-							accent={card.accent}
-							featured={card.featured}
-						/>
-					)}
-				/>
-			</div>
-
-
 			<div className="relative z-10 flex w-full max-w-6xl flex-col gap-8 lg:flex-row items-center">
 				<motion.div
 					className="max-w-xl rounded-3xl border border-white/70 bg-white/80 p-6 shadow-[0_22px_70px_rgba(15,23,42,0.18)] backdrop-blur-2xl sm:p-8 lg:p-10"
@@ -212,9 +190,9 @@ const Hero: React.FC = () => {
 						mass: 0.9,
 					}}
 				>
-					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-slate-50/80 px-3 py-1.5 text-xs font-medium text-slate-600 sm:text-[13px]">
+					<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-slate-50/80 px-3 py-1.5 text-xs font-medium text-slate-600 sm:text-[10px]">
 						<span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-						<span className="uppercase tracking-[0.16em] text-slate-500">
+						<span className="uppercase tracking-[0.16em] text-slate-500 text-[10px]">
 							SJEC MART
 						</span>
 						<span className="h-3 w-px bg-slate-200" />
@@ -225,7 +203,7 @@ const Hero: React.FC = () => {
 
 					<div className="space-y-4">
 						<h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-							Groceries for
+							Groceries for{' '}
 							<span className="inline-block rounded-2xl py-1 text-emerald-700">
 								SJEC campus
 							</span>
@@ -252,7 +230,7 @@ const Hero: React.FC = () => {
 						</button>
 					</div>
 
-					<div className="mt-7 grid grid-cols-3 gap-4 border-t border-slate-200/80 pt-5">
+					<div className="mt-7 md:grid grid-cols-3 gap-4 border-t border-slate-200/80 pt-5 hidden ">
 						<div className="space-y-2">
 							<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
 								Delivery Window
@@ -327,6 +305,28 @@ const Hero: React.FC = () => {
 					</div>
 				</motion.div>
 			</div>
+			
+			<div className="pointer-events-none lg:absolute inset-0 flex items-center justify-center">
+				<RealInfiniteScroller
+					data={duplicatedGalleryCards} 
+					speed={0.7}
+					render={(card, index) => (
+						<GalleryCard
+							key={card.id + index} 
+							index={index}
+							total={duplicatedGalleryCards.length} 
+							title={card.title}
+							subtitle={card.subtitle}
+							image={card.image}
+							accent={card.accent}
+							featured={card.featured}
+						/>
+					)}
+				/>
+			</div>
+
+
+
 		</section>
 	);
 };
