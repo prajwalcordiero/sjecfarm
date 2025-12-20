@@ -4,8 +4,12 @@ import { useCart } from "@/components/CartContext";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useUser } from "@clerk/nextjs";
+
 
 export default function CheckoutPage() {
+	const { user } = useUser();
+
 	const { cart, updateQuantity, removeItem } = useCart();
 	const router = useRouter();
 
@@ -19,14 +23,46 @@ export default function CheckoutPage() {
 	const [hostel, setHostel] = useState("");
 	const [payment, setPayment] = useState("cod");
 
-	const handlePlaceOrder = () => {
-		if (!name || !hostel || !room) {
-			alert("Please fill in all delivery details.");
-			return;
-		}
+	const handlePlaceOrder = async () => {
+  if (!name || !hostel || !room) {
+    alert("Please fill in all delivery details.");
+    return;
+  }
 
-		router.push("/order-success");
-	};
+  if (!user) {
+    alert("Please login to place order");
+    return;
+  }
+
+  const orderData = {
+    userId: user.id,
+    email: user.primaryEmailAddress?.emailAddress,
+    deliveryDetails: {
+      name,
+      hostel,
+      room,
+    },
+    paymentMethod: payment,
+    products: cart,
+    totalAmount: totalPrice,
+    createdAt: new Date(),
+  };
+
+  try {
+    const res = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData),
+    });
+
+    if (!res.ok) throw new Error("Order failed");
+
+    router.push("/order-success");
+  } catch (err) {
+    alert("Something went wrong. Try again.");
+  }
+};
+
 
 	return (
 		<div className="min-h-screen bg-[#f5f7fa] py-10 px-4 text-slate-900">
