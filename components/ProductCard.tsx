@@ -22,6 +22,7 @@ export default function ProductCard({ item }: any) {
       price: item.price,
       imageUrl: item.imageUrl,
       quantity: 1,
+      stock: item.stock
     });
 
     setMessage(`${item.name} added to cart!`);
