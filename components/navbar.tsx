@@ -1,7 +1,7 @@
 "use client";
 
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { Home, ShoppingCart } from "lucide-react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import { BrainCircuit, Home, Power, ShoppingCart, Speech, TowerControlIcon } from "lucide-react";
 import Link from "next/link";
 import LocalFont from "next/font/local";
 
@@ -14,6 +14,7 @@ const Tomorrow = LocalFont({
 });
 
 export default function Navbar() {
+	const { user } = useUser();
 
 	return (
 		<header className="sticky top-0 left-0 z-100 w-full backdrop-blur-xl">
@@ -63,6 +64,14 @@ export default function Navbar() {
 								/>
 							</div>
 						</Link>
+						{user?.publicMetadata?.role === "admin" && <Link href="/admin">
+							<div className="relative">
+								<Power
+									size={22}
+									className="text-slate-700 hover:text-slate-900 transition"
+								/>
+							</div>
+						</Link>}
 						<Link href="/cart">
 							<div className="relative">
 								<ShoppingCart

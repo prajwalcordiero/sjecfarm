@@ -1,10 +1,27 @@
 "use client";
 
+import EditProductModal from "@/components/admin/EditProductModal";
+import NewProductModal from "@/components/admin/NewProductModal";
 import { useEffect, useState } from "react";
 
+type Product = {
+	id: string;
+	name: string;
+	category: string;
+	price: number;
+	stock: number;
+	imageUrl: string;
+};
+
 export default function ProductsPage() {
-	const [products, setProducts] = useState([]);
+	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [showNewProduct, setShowNewProduct] = useState(false);
+	const [editProduct, setEditProduct] = useState<{
+		id: string;
+		category: string;
+	} | null>(null);
+
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -16,62 +33,120 @@ export default function ProductsPage() {
 		fetchProducts();
 	}, []);
 
-	if (loading) return <p>Loading...</p>;
+	if (loading) {
+		return (
+			<div className="flex items-center justify-center h-64 text-gray-500">
+				Loading products…
+			</div>
+		);
+	}
 
 	return (
-		<div className="text-black">
-			<h1 className="text-3xl font-bold mb-6">Products</h1>
+		<div className="space-y-8 text-black">
+			<div className="flex items-center justify-between">
+				<div>
+					<h1 className="text-3xl font-semibold tracking-tight">
+						Products
+					</h1>
+					<p className="text-gray-500 mt-1">
+						Manage all store products
+					</p>
+				</div>
 
-			<table className="w-full border-collapse text-left">
-				<thead>
-					<tr>
-						<th className="border p-2">Image</th>
-						<th className="border p-2">Name</th>
-						<th className="border p-2">Category</th>
-						<th className="border p-2">Price</th>
-						<th className="border p-2">Stock</th>
-						<th className="border p-2">Actions</th>
-					</tr>
-				</thead>
+				<button
+					onClick={() => setShowNewProduct(true)}
+					className="px-5 py-2 rounded-xl bg-green-600 text-white font-medium hover:bg-green-700"
+				>
+					+ Add Product
+				</button>
+			</div>
 
-				<tbody>
-					{products.map((p: any) => (
-						<tr key={p.id}>
-							<td className="border p-2">
-								<img src={p.imageUrl} className="w-16 h-16 object-cover rounded" />
-							</td>
 
-							<td className="border p-2">{p.name}</td>
-							<td className="border p-2">{p.category}</td>
-							<td className="border p-2">₹{p.price}</td>
-							<td className="border p-2">{p.stock}</td>
+			<div className="grid gap-4">
+				{products.map((p) => (
+					<div
+						key={p.id}
+						className="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-4 flex items-center gap-6"
+					>
+						<img
+							src={p.imageUrl}
+							alt={p.name}
+							className="w-20 h-20 rounded-xl object-cover border"
+						/>
 
-							<td className="border p-2">
-								<a
-									className="text-blue-600 hover:underline mr-3"
-									href={`/admin/products/${p.category}/${p.id}`}
-								>
-									Edit
-								</a>
+						<div className="flex-1">
+							<h2 className="text-lg font-medium">{p.name}</h2>
+							<p className="text-sm text-gray-500">
+								Category: {p.category}
+							</p>
 
-								<button
-									className="text-red-600 hover:underline"
-									onClick={async () => {
-										if (!confirm("Delete product?")) return;
+							<div className="flex gap-6 mt-2 text-sm">
+								<span>
+									<span className="text-gray-400">Price</span>{" "}
+									<span className="font-medium">₹{p.price}</span>
+								</span>
 
-										await fetch(`/api/products/${p.category}/${p.id}`, {
-											method: "DELETE",
-										});
-										location.reload();
-									}}
-								>
-									Delete
-								</button>
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+								<span>
+									<span className="text-gray-400">Stock</span>{" "}
+									<span
+										className={`font-medium ${
+											p.stock === 0
+												? "text-red-600"
+												: "text-green-600"
+										}`}
+									>
+										{p.stock}
+									</span>
+								</span>
+							</div>
+						</div>
+
+						<div className="flex gap-3">
+							<button
+								onClick={() =>
+									setEditProduct({ id: p.id, category: p.category })
+								}
+								className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 hover:bg-gray-200"
+							>
+								Edit
+							</button>
+
+
+							<button
+								onClick={async () => {
+									if (!confirm("Delete product?")) return;
+
+									await fetch(
+										`/api/products/${p.category}/${p.id}`,
+										{ method: "DELETE" }
+									);
+									location.reload();
+								}}
+								className="px-4 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition"
+							>
+								Delete
+							</button>
+						</div>
+					</div>
+				))}
+			</div>
+			{editProduct && (
+				<EditProductModal
+					open={true}
+					id={editProduct.id}
+					category={editProduct.category}
+					onClose={() => setEditProduct(null)}
+					onUpdated={() => location.reload()}
+				/>
+			)}
+			{showNewProduct && (
+				<NewProductModal
+					open={true}
+					onClose={() => setShowNewProduct(false)}
+					onCreated={() => location.reload()}
+				/>
+			)}
+
 		</div>
 	);
 }
