@@ -1,15 +1,20 @@
 "use client";
 
-import Link from "next/link";
 import { useCart } from "@/components/CartContext";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
 	const { cart, updateQuantity, removeItem } = useCart();
+	const router = useRouter();
 
 	const totalPrice = cart.reduce(
 		(sum, item) => sum + item.price * item.quantity, 0
 	);
+	
+	const handlePlaceOrder = () => {
+		router.push(`/checkout?src=cart`);
+	}
 
 	return (
 		<div className="min-h-screen bg-[#f5f7fa] py-10 px-4 text-slate-900">
@@ -80,9 +85,9 @@ export default function CartPage() {
 
 					{cart.length > 0 && (
 						<div className="text-right mt-6">
-							<Link href={"/checkout"} className="bg-emerald-600 hover:bg-emerald-700 transition text-white px-6 py-3 rounded-full font-medium shadow-md">
+							<button onClick={handlePlaceOrder} className="bg-emerald-600 hover:bg-emerald-700 transition text-white px-6 py-3 rounded-full font-medium shadow-md">
 								Place Order
-							</Link>
+							</button>
 						</div>
 					)}
 				</motion.div>
