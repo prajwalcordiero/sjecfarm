@@ -1,15 +1,30 @@
 "use client";
 
 import { useCart } from "@/components/CartContext";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 
 export default function CheckoutPage() {
-	const { cart, updateQuantity, removeItem } = useCart();
 	const router = useRouter();
+	const searchParams = useSearchParams();
+	const src = searchParams.get("src");
+	const { cart, updateQuantity, removeItem } = useCart();
+	const [cartUpdated, setCartUpdated] = useState(cart);
 
-	const totalPrice = cart.reduce(
+	useEffect(() => {
+		setCartUpdated(cart);
+		if (src === "buy") {
+			let id = searchParams.get("id");
+			let name = searchParams.get("name");
+			let price = searchParams.get("price");
+			let imageUrl = searchParams.get("imageUrl");
+			let quantity = 1;
+
+			setCartUpdated([{ id, name, price, imageUrl, quantity }]);
+		}
+	}, [cart])
+	const totalPrice = cartUpdated.reduce(
 		(sum, item) => sum + item.price * item.quantity,
 		0
 	);
@@ -119,7 +134,7 @@ export default function CheckoutPage() {
 					<h2 className="text-lg font-semibold mb-3">Your Items</h2>
 
 					<div className="space-y-4">
-						{cart.map((item) => (
+						{cartUpdated?.map((item) => (
 							<div
 								key={item.id}
 								className="flex justify-between items-center bg-white rounded-xl p-4 border border-slate-200/60 shadow-sm"
