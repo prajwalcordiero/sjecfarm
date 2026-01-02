@@ -11,41 +11,42 @@ import {
 const galleryCards = [
 	{
 		id: "farms",
-		title: "Local Farms",
-		subtitle: "Mudushedde • Vamanjoor • Kulshekar",
+		title: "Campus Gardens",
+		subtitle: "Vegetables & fruits grown at SJEC",
 		image: "/green.jpeg",
 		accent: "bg-emerald-500/70",
 	},
 	{
 		id: "project",
-		title: "College Project",
-		subtitle: "Built by SJEC students",
+		title: "SJEC Initiative",
+		subtitle: "Managed by the institution & students",
 		image: "/classs.jpeg",
 		accent: "bg-sky-500/70",
 		featured: true,
 	},
 	{
 		id: "green",
-		title: "Green Initiatives",
-		subtitle: "Low plastic • Smart routes",
+		title: "Sustainable Campus",
+		subtitle: "Green practices & fresh harvests",
 		image: "/hand.webp",
 		accent: "bg-lime-500/70",
 	},
 	{
 		id: "hostel",
-		title: "Hostel Life",
-		subtitle: "Groceries to your block",
+		title: "Campus Community",
+		subtitle: "Food for students & staff",
 		image: "/green.jpeg",
 		accent: "bg-amber-500/70",
 	},
 	{
 		id: "bakery",
-		title: "Fresh Bakery",
-		subtitle: "Warm bread • Local buns",
+		title: "Campus Bakery & Eggs",
+		subtitle: "Bakery items and eggs for daily use",
 		image: "/extra.jpeg",
 		accent: "bg-rose-500/70",
 	},
 ];
+
 type GalleryCardProps = {
 	index: number;
 	total: number;
@@ -70,13 +71,11 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
 	const depth = Math.abs(logicalIndex - centerIndex);
 
 	const baseScale = featured ? 1.06 : 0.94 - depth * 0.02;
-	const baseY = depth * 12;
 
 	return (
 		<motion.div
 			className="relative h-80 w-48 overflow-hidden rounded-3xl border border-white/60 bg-white/60 shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:h-96 sm:w-56 lg:h-104 lg:w-64"
 			style={{
-				y: 0, 
 				scale: baseScale,
 				transformStyle: "preserve-3d",
 			}}
@@ -104,10 +103,6 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
 			<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-900/0 to-slate-900/0" />
 
 			<div className="pointer-events-none absolute inset-x-4 bottom-4 flex flex-col gap-2 text-left text-slate-50">
-				{/* <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/70 px-2.5 py-1 text-xs font-medium uppercase tracking-[0.16em] text-slate-100/80">
-					<span className={`h-1.5 w-1.5 rounded-full ${accent}`} />
-					SJEC Mart
-				</div> */}
 				<div className="space-y-1">
 					<h3 className="text-sm font-semibold sm:text-base">{title}</h3>
 					<p className="text-[11px] text-slate-200/75 sm:text-xs">
@@ -118,7 +113,6 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
 		</motion.div>
 	);
 };
-
 
 function useInfiniteCarousel(items: any[], speed = 0.6) {
 	const [cards, setCards] = useState(items);
@@ -168,16 +162,15 @@ const RealInfiniteScroller: React.FC<{
 	);
 };
 
-
 const Hero: React.FC = () => {
-    
-    const duplicatedGalleryCards = useMemo(() => {
-        return [...galleryCards, ...galleryCards];
-    }, []);
+	const duplicatedGalleryCards = useMemo(() => {
+		return [...galleryCards, ...galleryCards];
+	}, []);
 
 	return (
 		<section className="relative flex min-h-screen w-full items-center flex-col gap-10 justify-center overflow-hidden bg-[#f5f7f9] px-4 py-10 text-slate-900 sm:px-6 lg:px-12">
 			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.12),transparent_55%),radial-gradient(circle_at_bottom,rgba(15,23,42,0.16),transparent_60%)]" />
+			
 			<div className="relative z-10 flex w-full max-w-6xl flex-col gap-8 lg:flex-row items-center">
 				<motion.div
 					className="max-w-xl rounded-3xl border border-white/70 bg-white/80 p-6 shadow-[0_22px_70px_rgba(15,23,42,0.18)] backdrop-blur-2xl sm:p-8 lg:p-10"
@@ -197,124 +190,50 @@ const Hero: React.FC = () => {
 						</span>
 						<span className="h-3 w-px bg-slate-200" />
 						<span className="text-slate-500">
-							Groceries, from campus to your door
+							Campus-grown food for the SJEC community
 						</span>
 					</div>
 
 					<div className="space-y-4">
 						<h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-							Groceries for{' '}
+							Fresh food grown at{' '}
 							<span className="inline-block rounded-2xl py-1 text-emerald-700">
 								SJEC campus
 							</span>
-							<br/> delivered like a premium product.
+							<br /> for students and staff.
 						</h1>
 
 						<p className="text-sm leading-relaxed text-slate-600 sm:text-base">
-							SJEC Mart sources directly from nearby farms, bakeries, and
-							campus-friendly vendors. Built as a college project, designed like
-							a polished SaaS - fruits, vegetables, eggs, and essentials
-							delivered to your block with less plastic and smarter routes.
+							SJEC Mart is an institutional initiative that brings vegetables,
+							fruits, bakery items and eggs grown or supported within the
+							campus directly to the SJEC community. The focus is on freshness,
+							sustainability and responsible consumption.
 						</p>
 					</div>
 
 					<div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
 						<motion.button
-							className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-slate-50 shadow-[0_14px_35px_rgba(15,23,42,0.35)] transition hover:-translate-y-0.5 hover:bg-slate-900/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-6 sm:text-[15px]"
+							className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-slate-50 shadow-[0_14px_35px_rgba(15,23,42,0.35)] transition hover:-translate-y-0.5 hover:bg-slate-900/95"
 							whileTap={{ scale: 0.97 }}
 						>
-							Start a campus basket
+							Explore campus produce
 						</motion.button>
-						<button className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white/60 px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-5 sm:text-[15px]">
-							Explore sourcing story
+						<button className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white/60 px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/90">
+							Learn about the initiative
 						</button>
-					</div>
-
-					<div className="mt-7 md:grid grid-cols-3 gap-4 border-t border-slate-200/80 pt-5 hidden ">
-						<div className="space-y-2">
-							<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
-								Delivery Window
-							</p>
-							<p className="text-sm font-semibold text-slate-900">
-								5 - 10 PM daily
-							</p>
-							<p className="text-[11px] text-slate-500">
-								Optimized for hostel schedules.
-							</p>
-						</div>
-						<div className="space-y-2">
-							<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
-								Local Sourcing
-							</p>
-							<p className="text-sm font-semibold text-slate-900">
-								80% nearby farms
-							</p>
-							<p className="text-[11px] text-slate-500">
-								Shorter routes, fresher baskets.
-							</p>
-						</div>
-						<div className="space-y-2">
-							<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
-								Green Footprint
-							</p>
-							<p className="text-sm font-semibold text-slate-900">
-								3x crate reuse
-							</p>
-							<p className="text-[11px] text-slate-500">
-								Reusable crates & reduced plastic.
-							</p>
-						</div>
-					</div>
-				</motion.div>
-
-
-				<motion.div
-
-					className="hidden flex-1 flex-col justify-between gap-6 lg:flex"
-					initial={{ opacity: 0, x: 94 }}
-					animate={{ opacity: 1, x: 0 }}
-					transition={{
-						type: "spring",
-						stiffness: 120,
-						damping: 24,
-						delay: 0.08,
-					}}
-				>
-					<div className="ml-auto max-w-xs rounded-3xl border border-slate-200/70 bg-white/80 p-4 text-xs text-slate-600 shadow-[0_18px_40px_rgba(15,23,42,0.18)] backdrop-blur-2xl">
-						<p className="font-medium text-slate-900">
-							Designed like a product launch, tuned for campus life.
-						</p>
-						<p className="mt-2 text-[11px] leading-relaxed text-slate-500">
-							Think Figma, Notion, and Apple — but for your weekly grocery
-							runs. Every interaction is kept minimal, intentional, and calm.
-						</p>
-					</div>
-
-					<div className="ml-auto flex max-w-xs flex-col gap-3 text-xs text-slate-500">
-						<div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/80 px-3 py-1.5">
-							<span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-							<span className="font-medium text-slate-700">
-								Built as a student project
-							</span>
-						</div>
-						<p className="rounded-2xl border border-slate-200 bg-slate-50/80 px-3 py-1.5">
-							SJEC Mart is a living case study in product thinking, logistics,
-							and sustainable systems - wrapped inside a calm, premium
-							interface.
-						</p>
 					</div>
 				</motion.div>
 			</div>
-			
+
 			<div className="pointer-events-none lg:absolute inset-0 flex items-center justify-center">
 				<RealInfiniteScroller
-					data={duplicatedGalleryCards} 
+					data={duplicatedGalleryCards}
 					speed={0.7}
 					render={(card, index) => (
 						<GalleryCard
-							key={card.id + index} 
+							key={card.id + index}
 							index={index}
-							total={duplicatedGalleryCards.length} 
+							total={duplicatedGalleryCards.length}
 							title={card.title}
 							subtitle={card.subtitle}
 							image={card.image}
@@ -324,9 +243,6 @@ const Hero: React.FC = () => {
 					)}
 				/>
 			</div>
-
-
-
 		</section>
 	);
 };

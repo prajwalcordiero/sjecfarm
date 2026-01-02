@@ -20,52 +20,52 @@ const stagger = {
 
 const metricChips = [
 	{
-		label: "Campus-only",
-		detail: "Designed just for SJEC students & staff.",
+		label: "Campus-grown",
+		detail: "Vegetables and fruits grown within SJEC campus.",
 	},
 	{
-		label: "Local-first sourcing",
-		detail: "Farms, bakeries and vendors near campus.",
+		label: "Fresh produce",
+		detail: "Daily-use items harvested close to consumption.",
 	},
 	{
-		label: "Green delivery",
-		detail: "Reusable crates, fewer random trips.",
+		label: "Institution-led",
+		detail: "Managed as part of SJEC sustainability initiatives.",
 	},
 ];
 
 const steps = [
 	{
-		title: "Curate",
-		subtitle: "From pantry chaos to calm baskets",
-		body: "Instead of endless categories, SJEC FARM PRODUCE groups items into short, focused flows: fruits, veggies, bakery, eggs and essentials — tuned to what hostel life actually needs.",
+		title: "Grow",
+		subtitle: "Cultivated inside the campus",
+		body: "Vegetables and fruits are grown within SJEC premises through campus gardens and green zones, supporting sustainability and hands-on learning.",
 	},
 	{
-		title: "Batch",
-		subtitle: "Orders that travel together",
-		body: "Orders are batched by hostel blocks and time windows. That means less zig-zag routing and more predictable delivery time for clusters of students.",
+		title: "Prepare",
+		subtitle: "Handled and organised on campus",
+		body: "Produce is sorted and prepared carefully, along with bakery items and eggs sourced from campus-supported facilities.",
 	},
 	{
-		title: "Deliver",
-		subtitle: "Crates, not clutter",
-		body: "Deliveries land in reusable crates, with lower plastic usage and cleaner handovers to hostel lobbies or designated drop points.",
+		title: "Serve",
+		subtitle: "Fresh food for the SJEC community",
+		body: "Items are made available directly to students and staff, ensuring freshness, transparency and minimal wastage.",
 	},
 ];
 
 const microBlocks = [
 	{
-		tag: "Problem",
-		title: "City-scale apps feel overkill inside campus.",
-		body: "Most grocery apps are built for entire cities. Filters, surge slots, random delivery windows — it’s noisy for a single college campus.",
+		tag: "Purpose",
+		title: "Turning campus cultivation into daily nourishment.",
+		body: "SJEC Mart connects food grown within the campus directly to its community, closing the gap between cultivation and consumption.",
 	},
 	{
 		tag: "Approach",
-		title: "Design for one campus, deeply.",
-		body: "SJEC FARM PRODUCE embraces the constraint: one campus, known hostels, predictable time windows. That lets the UI stay minimal, while the system logic stays smart.",
+		title: "Simple, local and sustainable.",
+		body: "By focusing only on campus-grown produce, SJEC Mart avoids long supply chains and keeps food systems transparent and efficient.",
 	},
 	{
 		tag: "Outcome",
-		title: "A product case study, not just a project.",
-		body: "The goal is something you can proudly show as a product story — UX, logistics, sustainability and campus life woven together.",
+		title: "Learning, sustainability and nutrition together.",
+		body: "The initiative serves as a living example of how institutions can combine education, sustainability and food security.",
 	},
 ];
 
@@ -84,24 +84,25 @@ const AboutSJECMart: React.FC = () => {
 					<motion.div variants={fadeUp} className="space-y-6">
 						<div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500 shadow-sm backdrop-blur-xl">
 							<span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-							<span>About SJEC FARM PRODUCE</span>
+							<span>About SJEC Mart</span>
 							<span className="h-3 w-px bg-slate-200" />
-							<span>GreenBasket for one campus</span>
+							<span>Campus-grown produce</span>
 						</div>
 
 						<h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-[2.6rem]">
-							A campus-only grocery platform that treats{" "}
+							Bringing{" "}
 							<span className="inline-block rounded-2xl bg-emerald-50 px-2.5 py-1 text-emerald-700">
-								hostel life
+								SJEC-grown food
 							</span>{" "}
-							like a real product use-case.
+							directly to the campus community.
 						</h1>
 
 						<p className="max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-[15px]">
-							SJEC FARM PRODUCE (internally called GreenBasket) focuses on exactly one
-							environment: the SJEC campus. Instead of competing with city-scale
-							apps, it optimizes for predictable hostel drops, local vendors and
-							greener delivery patterns — all inside a calm, premium interface.
+							SJEC Mart is an initiative that makes use of vegetables, fruits,
+							bakery items and eggs produced within the St Joseph Engineering
+							College campus. It connects institutional cultivation efforts
+							directly with students and staff, ensuring freshness,
+							sustainability and transparency.
 						</p>
 
 						<div className="mt-4 flex flex-wrap gap-2.5">
@@ -122,6 +123,7 @@ const AboutSJECMart: React.FC = () => {
 						</div>
 					</motion.div>
 
+					{/* IMAGE SECTION – KEPT EXACTLY SAME */}
 					<motion.div
 						variants={fadeUp}
 						className="relative h-80 rounded-3xl border border-white/60 bg-white/60 p-3 shadow-[0_24px_60px_rgba(15,23,42,0.2)] backdrop-blur-2xl sm:h-[360px] lg:h-[380px]"
@@ -129,23 +131,16 @@ const AboutSJECMart: React.FC = () => {
 						<div className="absolute inset-0 overflow-hidden rounded-2xl bg-slate-950/3" />
 						<div className="relative z-10 grid h-full grid-cols-[1.3fr_1fr] gap-3">
 							<div className="relative overflow-hidden rounded-2xl">
-								<motion.div
-									className="absolute inset-0"
-									initial={{ scale: 1.04, opacity: 0 }}
-									animate={{ scale: 1, opacity: 1 }}
-									transition={{ duration: 0.9, ease: "easeOut" }}
-								>
-									<Image
-										src="/green.jpeg"
-										alt="Curated grocery basket for SJEC hostels"
-										fill
-										className="object-cover"
-										priority
-									/>
-								</motion.div>
+								<Image
+									src="/green.jpeg"
+									alt="Campus-grown vegetables and fruits"
+									fill
+									className="object-cover"
+									priority
+								/>
 								<div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
 								<div className="pointer-events-none absolute left-3 bottom-3 rounded-full bg-black/60 px-2.5 py-1 text-[11px] text-slate-100">
-									Evening hostel drop · 7:30 PM
+									SJEC campus cultivation
 								</div>
 							</div>
 
@@ -153,36 +148,37 @@ const AboutSJECMart: React.FC = () => {
 								<div className="relative h-1/2 overflow-hidden rounded-2xl">
 									<Image
 										src="/extra.jpeg"
-										alt="Hostel corridor where crates are delivered"
+										alt="Bakery items prepared for campus use"
 										fill
 										className="object-cover"
 									/>
 									<div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-slate-950/55 via-transparent to-transparent" />
 									<div className="pointer-events-none absolute left-3 bottom-2 text-[11px] font-medium text-slate-100">
-										Hostel blocks as delivery nodes
+										Campus bakery support
 									</div>
 								</div>
 								<div className="relative h-1/2 overflow-hidden rounded-2xl">
 									<Image
 										src="/hand.webp"
-										alt="Nearby farm sourcing produce for SJEC FARM PRODUCE"
+										alt="Eggs and produce from campus-supported facilities"
 										fill
 										className="object-cover"
 									/>
 									<div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-slate-950/55 via-transparent to-transparent" />
 									<div className="pointer-events-none absolute left-3 bottom-2 text-[11px] font-medium text-slate-100">
-										Nearby farms · Morning sourcing
+										Eggs & fresh produce
 									</div>
 								</div>
 							</div>
 						</div>
 
 						<div className="pointer-events-none absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-slate-500 shadow-sm">
-							Built as a student product story
+							SJEC sustainability initiative
 						</div>
 					</motion.div>
 				</motion.section>
 
+				{/* MICRO BLOCKS */}
 				<motion.section
 					variants={stagger}
 					initial="hidden"
@@ -209,6 +205,7 @@ const AboutSJECMart: React.FC = () => {
 					))}
 				</motion.section>
 
+				{/* STEPS */}
 				<motion.section
 					variants={stagger}
 					initial="hidden"
@@ -219,16 +216,15 @@ const AboutSJECMart: React.FC = () => {
 					<motion.div variants={fadeUp} className="space-y-6">
 						<div className="space-y-2">
 							<p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">
-								From selection to crate
+								From campus to community
 							</p>
 							<h2 className="text-lg font-semibold tracking-tight text-slate-900 sm:text-xl">
-								How an SJEC FARM PRODUCE order actually moves through the system.
+								How SJEC-grown food reaches students and staff.
 							</h2>
 							<p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-[15px]">
-								We treat the entire journey as a designed flow: what the student
-								sees, how the order is grouped, how it moves across campus, and
-								how it finally lands at a hostel block — ideally in a shared,
-								reusable crate instead of a pile of plastic bags.
+								Every stage — from cultivation to consumption — happens within
+								or around the SJEC ecosystem, reinforcing sustainability and
+								practical learning.
 							</p>
 						</div>
 
@@ -262,29 +258,17 @@ const AboutSJECMart: React.FC = () => {
 						</div>
 					</motion.div>
 
-					<motion.aside
-						variants={fadeUp}
-						className="relative lg:top-24"
-					>
+					{/* IMAGE ASIDE – KEPT SAME */}
+					<motion.aside variants={fadeUp} className="relative lg:top-24">
 						<div className="relative overflow-hidden rounded-3xl border border-white/70 bg-white/90 shadow-[0_22px_60px_rgba(15,23,42,0.22)] backdrop-blur-2xl">
 							<div className="relative h-64 sm:h-72">
 								<Image
 									src="/sjec.jpg"
-									alt="Reusable grocery crates used for SJEC FARM PRODUCE deliveries"
+									alt="SJEC campus greenery and cultivation"
 									fill
 									className="object-cover"
 								/>
 								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-								<div className="pointer-events-none absolute left-4 bottom-4 space-y-1 text-[11px] text-slate-100">
-									<p className="inline-flex items-center rounded-full bg-black/55 px-2.5 py-1 font-medium">
-										<span className="mr-1 h-1.5 w-1.5 rounded-full bg-emerald-400" />
-										Shared crate · Not single-use bags
-									</p>
-									<p className="text-[11px] text-slate-200">
-										Each crate can serve multiple evening drops before being
-										cycled back to vendors.
-									</p>
-								</div>
 							</div>
 
 							<div className="border-t border-white/70 bg-linear-to-br from-slate-50/95 to-slate-100/95 p-4 text-[12px] text-slate-600 sm:p-5">
@@ -292,14 +276,9 @@ const AboutSJECMart: React.FC = () => {
 									Why this matters
 								</p>
 								<p className="mt-1.5">
-									SJEC FARM PRODUCE uses the visual language of premium software
-									products, but the real story sits here — in how baskets are
-									grouped, how crates are reused and how routes respect the way
-									students actually live on campus.
-								</p>
-								<p className="mt-2 text-[11px] text-slate-500">
-									That&apos;s what turns a “grocery website” into a product
-									you&apos;d proudly put into a portfolio or a case study.
+									SJEC Mart demonstrates how campus resources can be used
+									thoughtfully to support nutrition, sustainability and
+									education at the same time.
 								</p>
 							</div>
 						</div>
