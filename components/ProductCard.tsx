@@ -11,7 +11,7 @@ export default function ProductCard({ item }: any) {
 
   const handleBuyNow = (item: any) => {
     router.push(
-      `/checkout?id=${item.id}&name=${item.name}&price=${item.price}&imageUrl=${item.imageUrl}`
+      `/checkout?src=buy&id=${item.id}&name=${item.name}&price=${item.price}&imageUrl=${item.imageUrl}`
     );
   };
 
@@ -29,21 +29,26 @@ export default function ProductCard({ item }: any) {
     setTimeout(() => setMessage(""), 2000);
   };
 
+	const handleSelect = (id: string) => {
+		router.push(`/products/${id}`);
+  };
+
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all p-4 border border-gray-100">
-        <img
-          src={item.imageUrl}
-          alt={item.name}
-          className="w-full h-40 object-cover rounded-lg"
-        />
+        <div className="cursor-pointer" onClick={() => handleSelect(item.id)} >
+          <img
+            src={item.imageUrl}
+            alt={item.name}
+            className="w-full h-40 object-cover rounded-lg"
+          />
 
-        <h3 className="mt-3 text-lg font-semibold text-gray-900">
-          {item.name}
-        </h3>
+          <h3 className="mt-3 text-lg font-semibold text-gray-900">
+            {item.name}
+          </h3>
 
-        <p className="text-sm text-gray-500">₹{item.price}</p>
-
+          <p className="text-sm text-gray-500">₹{item.price}</p>
+        </div>
         <div className="mt-4 flex justify-between items-center">
           <button
             onClick={() => handleAddToCart(item)}
