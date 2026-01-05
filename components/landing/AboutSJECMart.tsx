@@ -21,51 +21,51 @@ const stagger = {
 const metricChips = [
 	{
 		label: "Campus-only",
-		detail: "Designed just for SJEC students & staff.",
+		detail: "Built exclusively for the SJEC community.",
 	},
 	{
 		label: "Local-first sourcing",
-		detail: "Farms, bakeries and vendors near campus.",
+		detail: "Partnered with vendors in and around campus.",
 	},
 	{
 		label: "Green delivery",
-		detail: "Reusable crates, fewer random trips.",
+		detail: "Consolidated routes and reusable delivery crates.",
 	},
 ];
 
 const steps = [
 	{
 		title: "Curate",
-		subtitle: "From pantry chaos to calm baskets",
-		body: "Instead of endless categories, SJEC FARM PRODUCE groups items into short, focused flows: fruits, veggies, bakery, eggs and essentials — tuned to what hostel life actually needs.",
+		subtitle: "Simple selection for everyday campus needs",
+		body: "Product selection is intentionally focused on frequently used grocery items, organized into clear, purpose-driven categories suited to day-to-day life on campus.",
 	},
 	{
 		title: "Batch",
-		subtitle: "Orders that travel together",
-		body: "Orders are batched by hostel blocks and time windows. That means less zig-zag routing and more predictable delivery time for clusters of students.",
+		subtitle: "Orders planned, not rushed",
+		body: "Orders are grouped by campus buildings and predefined delivery windows, enabling efficient routing and consistent delivery times across the campus.",
 	},
 	{
 		title: "Deliver",
-		subtitle: "Crates, not clutter",
-		body: "Deliveries land in reusable crates, with lower plastic usage and cleaner handovers to hostel lobbies or designated drop points.",
+		subtitle: "Shared infrastructure over single-use packaging",
+		body: "Deliveries are completed using reusable crates, reducing single-use plastic and simplifying drop-offs at designated campus collection points.",
 	},
 ];
 
 const microBlocks = [
 	{
 		tag: "Problem",
-		title: "City-scale apps feel overkill inside campus.",
-		body: "Most grocery apps are built for entire cities. Filters, surge slots, random delivery windows — it’s noisy for a single college campus.",
+		title: "City-scale grocery platforms are not built for campuses.",
+		body: "Most grocery platforms are designed for city-wide usage, introducing unnecessary complexity such as fragmented routing and variable delivery slots that do not translate well to a contained campus environment.",
 	},
 	{
 		tag: "Approach",
-		title: "Design for one campus, deeply.",
-		body: "SJEC FARM PRODUCE embraces the constraint: one campus, known hostels, predictable time windows. That lets the UI stay minimal, while the system logic stays smart.",
+		title: "Designed specifically for the SJEC campus.",
+		body: "By operating within a single campus, with known buildings and predictable time windows, the platform remains operationally efficient while keeping the user experience straightforward and reliable.",
 	},
 	{
 		tag: "Outcome",
-		title: "A product case study, not just a project.",
-		body: "The goal is something you can proudly show as a product story — UX, logistics, sustainability and campus life woven together.",
+		title: "A practical campus service with measurable impact.",
+		body: "The result is a functional service that brings together logistics planning, sustainability goals, and the everyday needs of the SJEC community.",
 	},
 ];
 
@@ -84,24 +84,25 @@ const AboutSJECMart: React.FC = () => {
 					<motion.div variants={fadeUp} className="space-y-6">
 						<div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500 shadow-sm backdrop-blur-xl">
 							<span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-							<span>About SJEC FARM PRODUCE</span>
+							<span>About SJEC Farm Produce</span>
 							<span className="h-3 w-px bg-slate-200" />
-							<span>GreenBasket for one campus</span>
+							<span>Campus grocery initiative</span>
 						</div>
 
 						<h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-[2.6rem]">
-							A campus-only grocery platform that treats{" "}
+							A campus-focused grocery platform designed for{" "}
 							<span className="inline-block rounded-2xl bg-emerald-50 px-2.5 py-1 text-emerald-700">
-								hostel life
-							</span>{" "}
-							like a real product use-case.
+								everyday life on campus
+							</span>
+							.
 						</h1>
 
 						<p className="max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-[15px]">
-							SJEC FARM PRODUCE (internally called GreenBasket) focuses on exactly one
-							environment: the SJEC campus. Instead of competing with city-scale
-							apps, it optimizes for predictable hostel drops, local vendors and
-							greener delivery patterns — all inside a calm, premium interface.
+							SJEC Farm Produce is a campus-focused grocery initiative built
+							specifically for the SJEC community. Rather than replicating
+							city-scale delivery models, it prioritizes predictable campus drop
+							schedules, nearby vendors, and environmentally responsible delivery
+							practices within campus.
 						</p>
 
 						<div className="mt-4 flex flex-wrap gap-2.5">
@@ -129,43 +130,36 @@ const AboutSJECMart: React.FC = () => {
 						<div className="absolute inset-0 overflow-hidden rounded-2xl bg-slate-950/3" />
 						<div className="relative z-10 grid h-full grid-cols-[1.3fr_1fr] gap-3">
 							<div className="relative overflow-hidden rounded-2xl">
-								<motion.div
-									className="absolute inset-0"
-									initial={{ scale: 1.04, opacity: 0 }}
-									animate={{ scale: 1, opacity: 1 }}
-									transition={{ duration: 0.9, ease: "easeOut" }}
-								>
-									<Image
-										src="/green.jpeg"
-										alt="Curated grocery basket for SJEC hostels"
-										fill
-										className="object-cover"
-										priority
-									/>
-								</motion.div>
+								<Image
+									src="/1.jpg"
+									alt="Curated grocery basket for campus delivery"
+									fill
+									className="object-cover"
+									priority
+								/>
 								<div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
 								<div className="pointer-events-none absolute left-3 bottom-3 rounded-full bg-black/60 px-2.5 py-1 text-[11px] text-slate-100">
-									Evening hostel drop · 7:30 PM
+									Evening campus drop · 7:30 PM
 								</div>
 							</div>
 
 							<div className="flex flex-col gap-3">
 								<div className="relative h-1/2 overflow-hidden rounded-2xl">
 									<Image
-										src="/extra.jpeg"
-										alt="Hostel corridor where crates are delivered"
+										src="/2.jpg"
+										alt="Campus building collection point"
 										fill
 										className="object-cover"
 									/>
 									<div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-slate-950/55 via-transparent to-transparent" />
 									<div className="pointer-events-none absolute left-3 bottom-2 text-[11px] font-medium text-slate-100">
-										Hostel blocks as delivery nodes
+										Campus buildings as delivery points
 									</div>
 								</div>
 								<div className="relative h-1/2 overflow-hidden rounded-2xl">
 									<Image
-										src="/hand.webp"
-										alt="Nearby farm sourcing produce for SJEC FARM PRODUCE"
+										src="/3.jpg"
+										alt="Nearby farm sourcing produce for SJEC Farm Produce"
 										fill
 										className="object-cover"
 									/>
@@ -178,7 +172,7 @@ const AboutSJECMart: React.FC = () => {
 						</div>
 
 						<div className="pointer-events-none absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-slate-500 shadow-sm">
-							Built as a student product story
+							Developed as a campus logistics initiative
 						</div>
 					</motion.div>
 				</motion.section>
@@ -269,7 +263,7 @@ const AboutSJECMart: React.FC = () => {
 						<div className="relative overflow-hidden rounded-3xl border border-white/70 bg-white/90 shadow-[0_22px_60px_rgba(15,23,42,0.22)] backdrop-blur-2xl">
 							<div className="relative h-64 sm:h-72">
 								<Image
-									src="/sjec.jpg"
+									src="/sjec_farm.jpg"
 									alt="Reusable grocery crates used for SJEC FARM PRODUCE deliveries"
 									fill
 									className="object-cover"
