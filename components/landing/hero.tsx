@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useRef, useState, useMemo } from "react"; 
+import React, { useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import {
 	motion,
 	useMotionValue,
 	useAnimationFrame,
 } from "framer-motion";
+import Link from "next/link";
 
 const galleryCards = [
 	{
@@ -76,7 +77,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
 		<motion.div
 			className="relative h-80 w-48 overflow-hidden rounded-3xl border border-white/60 bg-white/60 shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:h-96 sm:w-56 lg:h-104 lg:w-64"
 			style={{
-				y: 0, 
+				y: 0,
 				scale: baseScale,
 				transformStyle: "preserve-3d",
 			}}
@@ -170,10 +171,10 @@ const RealInfiniteScroller: React.FC<{
 
 
 const Hero: React.FC = () => {
-    
-    const duplicatedGalleryCards = useMemo(() => {
-        return [...galleryCards, ...galleryCards];
-    }, []);
+
+	const duplicatedGalleryCards = useMemo(() => {
+		return [...galleryCards, ...galleryCards];
+	}, []);
 
 	return (
 		<section className="relative flex min-h-screen w-full items-center flex-col gap-10 justify-center overflow-hidden bg-[#f5f7f9] px-4 py-10 text-slate-900 sm:px-6 lg:px-12">
@@ -207,7 +208,7 @@ const Hero: React.FC = () => {
 							<span className="inline-block rounded-2xl py-1 text-emerald-700">
 								SJEC campus
 							</span>
-							<br/> delivered like a premium product.
+							<br /> delivered like a premium product.
 						</h1>
 
 						<p className="text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -223,7 +224,10 @@ const Hero: React.FC = () => {
 							className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-slate-50 shadow-[0_14px_35px_rgba(15,23,42,0.35)] transition hover:-translate-y-0.5 hover:bg-slate-900/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-6 sm:text-[15px]"
 							whileTap={{ scale: 0.97 }}
 						>
-							Start a campus basket
+							<Link href="/sign-in">
+
+								Start a campus basket
+							</Link>
 						</motion.button>
 						<button className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white/60 px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-5 sm:text-[15px]">
 							Explore sourcing story
@@ -305,16 +309,16 @@ const Hero: React.FC = () => {
 					</div>
 				</motion.div>
 			</div>
-			
+
 			<div className="pointer-events-none lg:absolute inset-0 flex items-center justify-center">
 				<RealInfiniteScroller
-					data={duplicatedGalleryCards} 
+					data={duplicatedGalleryCards}
 					speed={0.7}
 					render={(card, index) => (
 						<GalleryCard
-							key={card.id + index} 
+							key={card.id + index}
 							index={index}
-							total={duplicatedGalleryCards.length} 
+							total={duplicatedGalleryCards.length}
 							title={card.title}
 							subtitle={card.subtitle}
 							image={card.image}
