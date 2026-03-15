@@ -6,7 +6,7 @@ import { cloudinary } from "@/lib/cloudinary/cloudinary";
 
 export async function GET(
     req: Request,
-    { params }: { params: { category: string, id: string } }
+    { params }: { params: Promise<{ category: string, id: string }> }
 ) {
     const { category, id } = await params;
     
@@ -23,7 +23,7 @@ export async function GET(
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { category: string, id: string } }
+    { params }: { params: Promise<{ category: string, id: string }> }
 ) {
     const { userId } = await auth();
     if (!userId)
@@ -59,7 +59,7 @@ export async function PATCH(
 
 export async function DELETE(
     _req: Request,
-    { params }: { params: { category: string; id: string } }
+    { params }: { params: Promise<{ category: string; id: string }> }
 ) {
     const { userId } = await auth();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

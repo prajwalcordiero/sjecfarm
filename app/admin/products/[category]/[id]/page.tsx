@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function EditProduct({ params }: any) {
 	const { category, id } = useParams();
-	const [product, setProduct] = useState(null);
+	const [product, setProduct] = useState<any>(null);
 
 	useEffect(() => {
 		fetch(`/api/products/${category}/${id}`)

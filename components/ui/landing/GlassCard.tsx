@@ -16,8 +16,8 @@ const GlassCard: React.FC<GlassCardProps> = ({ children, className = '', motionP
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6 }}
-            {...motionProps}
-            {...rest}
+            {...motionProps as any}
+            {...rest as any}
         >
             {children}
         </motion.div>

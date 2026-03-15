@@ -13,9 +13,9 @@ function optimize(url: string) {
     return url;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductsPage() { 
-    const { userId } = await auth();
-    if (!userId) redirect("/sign-in?redirect=/products");
     const products = await getAllProducts();
     return (
         <main className="bg-amber-100">

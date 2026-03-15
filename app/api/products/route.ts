@@ -34,7 +34,7 @@ export async function GET() {
 				.get();
 			
 			snap.docs.forEach(d => {
-				products.push({ id: d.id, category: category, ...d.data() })
+				products.push({ id: d.id, category: category as any, ...d.data() } as Product)
 			})
 		}
 		return NextResponse.json({ ok: true, products });

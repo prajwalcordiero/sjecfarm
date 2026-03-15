@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 
-export default function CheckoutPage() {
+import { Suspense } from "react";
+
+function CheckoutContent() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const src = searchParams.get("src");
@@ -25,7 +27,7 @@ export default function CheckoutPage() {
 		}
 	}, [cart])
 	const totalPrice = cartUpdated.reduce(
-		(sum, item) => sum + item.price * item.quantity,
+		(sum: number, item: any) => sum + item.price * item.quantity,
 		0
 	);
 
@@ -134,7 +136,7 @@ export default function CheckoutPage() {
 					<h2 className="text-lg font-semibold mb-3">Your Items</h2>
 
 					<div className="space-y-4">
-						{cartUpdated?.map((item) => (
+						{cartUpdated?.map((item: any) => (
 							<div
 								key={item.id}
 								className="flex justify-between items-center bg-white rounded-xl p-4 border border-slate-200/60 shadow-sm"
@@ -192,5 +194,13 @@ export default function CheckoutPage() {
 				</motion.div>
 			</div>
 		</div>
+	);
+}
+
+export default function CheckoutPage() {
+	return (
+		<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading checkout...</div>}>
+			<CheckoutContent />
+		</Suspense>
 	);
 }

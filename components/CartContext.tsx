@@ -3,11 +3,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 
-const CartContext = createContext(null);
+const CartContext = createContext<any>(null);
 
 export function CartProvider({ children }: any) {
 	const { user } = useUser();
-	const [cart, setCart] = useState([]);
+	const [cart, setCart] = useState<any[]>([]);
 
 	useEffect(() => {
 		if (!user) return;

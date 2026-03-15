@@ -13,6 +13,7 @@ const SORT_OPTIONS = ["Price: Low to High", "Price: High to Low", "Newest"];
 
 export default function CategoryPage() {
 	const { category } = useParams();
+	const categoryStr = Array.isArray(category) ? category[0] : (category as string);
 	const [products, setProducts] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 
@@ -33,10 +34,10 @@ export default function CategoryPage() {
 
 	useEffect(() => {
 		const fetchProducts = async () => {
-			if (!category) return;
+			if (!categoryStr) return;
 
 			const normalizedCategory =
-				category === "vegetable" ? "vegetables" : category;
+				categoryStr === "vegetable" ? "vegetables" : categoryStr;
 
 			try {
 				const ref = collection(
@@ -83,7 +84,7 @@ export default function CategoryPage() {
 					<div
 						className="absolute inset-0 bg-cover bg-center"
 						style={{
-							backgroundImage: `url(${heroImages[category] || "/images/default-hero.jpg"})`,
+							backgroundImage: `url(${heroImages[categoryStr] || "/images/default-hero.jpg"})`,
 						}}
 					/>
 
@@ -91,7 +92,7 @@ export default function CategoryPage() {
 
 					<div className="relative z-10">
 						<h1 className="text-4xl sm:text-6xl font-bold text-slate-900 tracking-tight">
-							{titleMap[category] || "Products"}
+							{titleMap[categoryStr] || "Products"}
 						</h1>
 						<p className="text-sm sm:text-base text-slate-600 mt-2">
 							Fresh. Local. Delivered smarter.

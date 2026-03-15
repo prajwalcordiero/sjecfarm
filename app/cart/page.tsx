@@ -9,7 +9,7 @@ export default function CartPage() {
 	const router = useRouter();
 
 	const totalPrice = cart.reduce(
-		(sum, item) => sum + item.price * item.quantity, 0
+		(sum: number, item: any) => sum + item.price * item.quantity, 0
 	);
 	
 	const handlePlaceOrder = () => {
@@ -32,7 +32,7 @@ export default function CartPage() {
 						<p className="text-slate-500 text-sm">Your cart is empty.</p>
 					)}
 
-					{cart.map((item) => (
+					{cart.map((item: any) => (
 						<div
 							key={item.id}
 							className="flex gap-4 py-6 border-b border-slate-200/50"

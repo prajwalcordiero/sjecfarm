@@ -10,13 +10,10 @@ type ProductPageProps = {
 	};
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductDetailsPage({ params }: ProductPageProps) {
 	const { id } = await params;
-
-	const { userId } = await auth();
-	if (!userId) {
-		redirect(`/sign-in?redirect=/products/${id}`);
-	}
 
 	const rawProduct: Product | null = await getProductById(id);
 
@@ -31,7 +28,7 @@ export default async function ProductDetailsPage({ params }: ProductPageProps) {
 	const product = {
 		...rawProduct,
 		createdAt: rawProduct.createdAt
-			? rawProduct.createdAt.toDate().toISOString()
+			? (rawProduct.createdAt as any).toDate?.().toISOString() || new Date(rawProduct.createdAt as any).toISOString()
 			: null,
 	};
 
